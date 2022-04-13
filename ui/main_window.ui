@@ -86,9 +86,9 @@
     <property name="title">
      <string>Format</string>
     </property>
-    <addaction name="actionXY"/>
-    <addaction name="actionpolar"/>
-    <addaction name="actionheatmap"/>
+    <addaction name="actionCar2D"/>
+    <addaction name="actionPolar"/>
+    <addaction name="actionHeatmap"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFormat"/>
@@ -99,19 +99,19 @@
     <string>Open</string>
    </property>
   </action>
-  <action name="actionXY">
+  <action name="actionCar2D">
    <property name="text">
-    <string>cartesian 2D</string>
+    <string>Cartesian 2D</string>
    </property>
   </action>
-  <action name="actionpolar">
+  <action name="actionPolar">
    <property name="text">
-    <string>polar</string>
+    <string>Polar</string>
    </property>
   </action>
-  <action name="actionheatmap">
+  <action name="actionHeatmap">
    <property name="text">
-    <string>heatmap</string>
+    <string>Heatmap</string>
    </property>
   </action>
  </widget>

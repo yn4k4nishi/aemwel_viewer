@@ -1,5 +1,8 @@
+from select import select
 import sys
 import matplotlib
+
+from plot.cartesian2D import plot
 matplotlib.use('Qt5Agg')
 
 from PyQt5.QtCore import *
@@ -11,6 +14,12 @@ from matplotlib.figure import Figure
 
 from ui.main_window import Ui_MainWindow
 
+from plot import *
+# from plot import PlotForm
+# from plot import cartesian2D
+# from plot import polar
+# from plot import heatmap
+
 
 class MplCanvas(FigureCanvasQTAgg):
 
@@ -21,6 +30,9 @@ class MplCanvas(FigureCanvasQTAgg):
 
 
 class MainWindow(QMainWindow):
+
+    form = PlotForm.cartesian2D
+    data = {}
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -37,15 +49,46 @@ class MainWindow(QMainWindow):
         self.ui.verticalLayout_plot.addWidget(self.canvas)
         self.ui.verticalLayout_plot.addWidget(toolbar)
 
+        ## setup menubar
+        self.ui.actionCar2D.setCheckable(True)
+        self.ui.actionPolar.setCheckable(True)
+        self.ui.actionHeatmap.setCheckable(True)
+
+        self.ui.form_group = QActionGroup(self)
+        self.ui.form_group.addAction(self.ui.actionCar2D)
+        self.ui.form_group.addAction(self.ui.actionPolar)
+        self.ui.form_group.addAction(self.ui.actionHeatmap)
+        
+        self.ui.actionCar2D.setChecked(True)
+
+
         ## connect ui and function
-        self.ui.pushButton_apply.clicked.connect(self.plot)
+        self.ui.pushButton_apply.clicked.connect(self.update)
+
+        self.ui.actionCar2D.triggered.connect(lambda : self.setForm(PlotForm.cartesian2D))
+        self.ui.actionPolar.triggered.connect(lambda : self.setForm(PlotForm.polar))
+        self.ui.actionHeatmap.triggered.connect(lambda : self.setForm(PlotForm.heatmap))
 
         ## show this widget
         self.show()
     
-    def plot(self, data):
+    def setForm(self, form):
+        print("setForm : {}".format(form))
+        self.form = form
+
+    def loadData(self):
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home')
+
+        if self.form == PlotForm.cartesian2D:
+            self.data = cartesian2D.load_data()
+
+    def update(self):
+
         self.canvas.axes.cla()
-        self.canvas.axes.plot([0,1,2,3,4], [10,1,20,3,40])
+        
+        if self.form == PlotForm.cartesian2D:
+            cartesian2D.plot(self.canvas.axes)
+
         self.canvas.draw()
 
 if __name__ == "__main__":
