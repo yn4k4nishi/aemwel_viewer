@@ -1,8 +1,6 @@
-from select import select
 import sys
 import matplotlib
 
-from plot.cartesian2D import plot
 matplotlib.use('Qt5Agg')
 
 from PyQt5.QtCore import *
@@ -64,6 +62,7 @@ class MainWindow(QMainWindow):
 
         ## connect ui and function
         self.ui.pushButton_apply.clicked.connect(self.update)
+        self.ui.actionOpen.triggered.connect(self.loadData)
 
         self.ui.actionCar2D.triggered.connect(lambda : self.setForm(PlotForm.cartesian2D))
         self.ui.actionPolar.triggered.connect(lambda : self.setForm(PlotForm.polar))
@@ -77,10 +76,12 @@ class MainWindow(QMainWindow):
         self.form = form
 
     def loadData(self):
-        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home')
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home')[0]
 
         if self.form == PlotForm.cartesian2D:
-            self.data = cartesian2D.load_data()
+            self.data = cartesian2D.load_data(file_name)
+        elif self.form == PlotForm.heatmap:
+            self.data = heatmap.load_data(file_name)
 
     def update(self):
 
