@@ -16,14 +16,14 @@
   <widget class="QWidget" name="centralwidget">
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QWidget" name="widget" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+     <layout class="QVBoxLayout" name="verticalLayout_plot">
+      <property name="leftMargin">
+       <number>10</number>
       </property>
-     </widget>
+      <property name="rightMargin">
+       <number>10</number>
+      </property>
+     </layout>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -73,11 +73,47 @@
      <x>0</x>
      <y>0</y>
      <width>911</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpen"/>
+   </widget>
+   <widget class="QMenu" name="menuFormat">
+    <property name="title">
+     <string>Format</string>
+    </property>
+    <addaction name="actionXY"/>
+    <addaction name="actionpolar"/>
+    <addaction name="actionheatmap"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuFormat"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionXY">
+   <property name="text">
+    <string>cartesian 2D</string>
+   </property>
+  </action>
+  <action name="actionpolar">
+   <property name="text">
+    <string>polar</string>
+   </property>
+  </action>
+  <action name="actionheatmap">
+   <property name="text">
+    <string>heatmap</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>
