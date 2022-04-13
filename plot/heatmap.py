@@ -1,6 +1,8 @@
 import csv
+from termios import VMIN
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
 
 
 def load_data(file_name):
@@ -11,7 +13,7 @@ def load_data(file_name):
         reader.__next__()
 
         header = reader.__next__()
-
+    
         values = [[]] * len(header)
 
         data = dict(zip(header, values))
@@ -25,15 +27,12 @@ def load_data(file_name):
             
 
 def plot(axes, data, target_z, target_freq):
-    x = np.take(data['x'],         np.where(data['z'] == target_z))
-    y = np.take(data['y'],         np.where(data['z'] == target_z))
-    z = np.take(data[target_freq], np.where(data['z'] == target_z))
+    x = np.take(np.array(data['x']        ), np.where(np.array(data['z']) == target_z)[0])
+    y = np.take(np.array(data['y']        ), np.where(np.array(data['z']) == target_z)[0])
+    z = np.take(np.array(data[target_freq]), np.where(np.array(data['z']) == target_z)[0])
 
-    x_grid, y_grid = np.meshgrid(x, y)
-    z_grid = z.reshape(len(x), len(y))
+    # heatmap = axes.pcolormesh(x, y, z, cmap='jet')
     
-    heatmap = plt.pcolormesh(x_grid, y_grid, z_grid, cmap='plasma') 
-
 
 if __name__ == "__main__":
     file = 'data/xyz_phase.csv'
@@ -42,9 +41,9 @@ if __name__ == "__main__":
     fig = plt.figure()
     axes = fig.add_subplot(111)
 
-    target_z = 0
-    target_freq = '500000000.0'
+    target_z = 0.0
+    target_freq = '1680000000.0'
 
     plot(axes, data, target_z, target_freq)
 
-    plt.show()
+    # plt.show()

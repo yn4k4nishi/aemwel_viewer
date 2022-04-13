@@ -13,10 +13,6 @@ from matplotlib.figure import Figure
 from ui.main_window import Ui_MainWindow
 
 from plot import *
-# from plot import PlotForm
-# from plot import cartesian2D
-# from plot import polar
-# from plot import heatmap
 
 
 class MplCanvas(FigureCanvasQTAgg):
