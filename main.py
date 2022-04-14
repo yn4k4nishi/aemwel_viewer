@@ -9,6 +9,7 @@ from PyQt5.QtWidgets import *
 
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg, NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
+from mpl_toolkits.axes_grid1 import axes_divider
 
 from ui.main_window import Ui_MainWindow
 
@@ -18,9 +19,9 @@ from plot import *
 class MplCanvas(FigureCanvasQTAgg):
 
     def __init__(self, parent=None, width=5, height=4, dpi=100):
-        fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = fig.add_subplot(111)
-        super(MplCanvas, self).__init__(fig)
+        self.fig = Figure(figsize=(width, height), dpi=dpi)
+        self.axes = self.fig.add_subplot(111)
+        super(MplCanvas, self).__init__(self.fig)
 
 
 class MainWindow(QMainWindow):
@@ -37,6 +38,7 @@ class MainWindow(QMainWindow):
         ## setup matplotlib
         self.canvas = MplCanvas(self, width=5, height=4, dpi=100)
         self.canvas.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
+        self.canvas.axes.set_aspect('equal')
 
         toolbar = NavigationToolbar(self.canvas, self)
 
@@ -85,6 +87,12 @@ class MainWindow(QMainWindow):
         
         if self.form == PlotForm.cartesian2D:
             cartesian2D.plot(self.canvas.axes)
+        if self.form == PlotForm.heatmap:
+            c = heatmap.plot(self.canvas.axes, self.data, 0, '1680000000.0')
+            ## color bar
+            divider = axes_divider.make_axes_locatable(self.canvas.axes)
+            cax = divider.append_axes("right", size="3%", pad="2%")
+            self.canvas.fig.colorbar(c, cax=cax)
 
         self.canvas.draw()
 
