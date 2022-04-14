@@ -1,5 +1,6 @@
 import sys
 import matplotlib
+from matplotlib import projections
 
 matplotlib.use('Qt5Agg')
 
@@ -18,10 +19,14 @@ from plot import *
 
 class MplCanvas(FigureCanvasQTAgg):
 
-    def __init__(self, parent=None, width=5, height=4, dpi=100):
+    def __init__(self, parent=None, projection=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = self.fig.add_subplot(111)
+        self.axes = self.fig.add_subplot(111, projection=projection)
         super(MplCanvas, self).__init__(self.fig)
+
+        self.axes.set_aspect('equal')
+        self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
+
 
 
 class MainWindow(QMainWindow):
@@ -36,9 +41,7 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         ## setup matplotlib
-        self.canvas = MplCanvas(self, width=5, height=4, dpi=100)
-        self.canvas.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
-        self.canvas.axes.set_aspect('equal')
+        self.canvas = MplCanvas(self)
 
         toolbar = NavigationToolbar(self.canvas, self)
 
@@ -78,7 +81,11 @@ class MainWindow(QMainWindow):
 
         if self.form == PlotForm.cartesian2D:
             self.data = cartesian2D.load_data(file_name)
-        elif self.form == PlotForm.heatmap:
+
+        if self.form == PlotForm.polar:
+            self.data = polar.load_data(file_name)
+
+        if self.form == PlotForm.heatmap:
             self.data = heatmap.load_data(file_name)
 
     def update(self):
@@ -87,7 +94,13 @@ class MainWindow(QMainWindow):
         
         if self.form == PlotForm.cartesian2D:
             cartesian2D.plot(self.canvas.axes)
+
+        if self.form == PlotForm.polar:
+            # self.canvas.__init__(self, projection='polar')
+            polar.plot(self.canvas.axes, self.data, '6200000000.0')
+
         if self.form == PlotForm.heatmap:
+
             c = heatmap.plot(self.canvas.axes, self.data, 0, '1680000000.0')
             ## color bar
             divider = axes_divider.make_axes_locatable(self.canvas.axes)
