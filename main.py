@@ -19,9 +19,9 @@ from plot import *
 
 class MplCanvas(FigureCanvasQTAgg):
 
-    def __init__(self, parent=None, projection=None, width=5, height=4, dpi=100):
+    def __init__(self, parent=None, width=5, height=4, dpi=100):
         self.fig = Figure(figsize=(width, height), dpi=dpi)
-        self.axes = self.fig.add_subplot(111, projection=projection)
+        self.axes = self.fig.add_subplot(111)
         super(MplCanvas, self).__init__(self.fig)
 
         self.axes.set_aspect('equal')
@@ -90,17 +90,19 @@ class MainWindow(QMainWindow):
 
     def update(self):
 
-        self.canvas.axes.cla()
+        # self.canvas.axes.cla()
+        self.canvas.fig.clf()
         
         if self.form == PlotForm.cartesian2D:
+            self.canvas.axes = self.canvas.fig.add_subplot(111)
             cartesian2D.plot(self.canvas.axes)
 
         if self.form == PlotForm.polar:
-            # self.canvas.__init__(self, projection='polar')
+            self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
             polar.plot(self.canvas.axes, self.data, '6200000000.0')
 
         if self.form == PlotForm.heatmap:
-
+            self.canvas.axes = self.canvas.fig.add_subplot(111)
             c = heatmap.plot(self.canvas.axes, self.data, 0, '1680000000.0')
             ## color bar
             divider = axes_divider.make_axes_locatable(self.canvas.axes)

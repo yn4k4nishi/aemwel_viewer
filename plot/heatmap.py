@@ -66,6 +66,8 @@ def plot(axes, data, target_z, target_freq):
     # heatmap = axes.pcolormesh( x_grid,y_grid,  z.T, cmap='jet', shading='flat', vmin=z_min, vmax=z_max, clip_on=True)
     heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True)
     
+    axes.set_aspect('equal')
+
     return heatmap
 
 if __name__ == "__main__":
