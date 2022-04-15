@@ -139,8 +139,9 @@ class MainWindow(QMainWindow):
             pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
             pickup_value = float(self.ui.comboBox_cutting.currentText())
             freq = self.ui.comboBox_freq.currentText()
+            offset = float(self.ui.lineEdit_offset.text())
 
-            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq)
+            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, offset)
             
             ## color bar
             divider = axes_divider.make_axes_locatable(self.canvas.axes)

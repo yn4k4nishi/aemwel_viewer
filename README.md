@@ -22,4 +22,8 @@
 ## Install
 
 ## Usage
+1. 上部のタブから`Form`を選ぶ
+2. 上部のタブから`File` > `Open` で表示するファイルを選択する
+    - note : heatmap用のデータはファイル 
+
 

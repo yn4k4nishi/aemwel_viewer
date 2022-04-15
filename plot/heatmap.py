@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
             
 
-def plot(axes, data, pickup_axis, pickup_value, freq):
+def plot(axes, data, pickup_axis, pickup_value, freq, offset):
     ax1 = 'xyz'.replace(pickup_axis, '')[0]
     ax2 = 'xyz'.replace(pickup_axis, '')[1]
 
@@ -31,8 +31,12 @@ def plot(axes, data, pickup_axis, pickup_value, freq):
 
         z[i] = _z[t]
 
+    z += offset
+    z = (z + 180) % 360 - 180 
+
     z_max = np.max(z)
     z_min = np.min(z)
+
 
     heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True)
     
