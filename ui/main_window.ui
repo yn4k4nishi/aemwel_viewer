@@ -164,29 +164,18 @@
           </item>
           <item>
            <widget class="QGroupBox" name="groupBox_4">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="title">
-             <string>Data</string>
+             <string>Freq</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_7">
              <item>
-              <widget class="QListWidget" name="listWidget"/>
-             </item>
-             <item>
-              <widget class="QComboBox" name="comboBox_Data"/>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_addData">
-               <property name="text">
-                <string>Add Data</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_clearData">
-               <property name="text">
-                <string>Clear</string>
-               </property>
-              </widget>
+              <widget class="QComboBox" name="comboBox_freq"/>
              </item>
             </layout>
            </widget>

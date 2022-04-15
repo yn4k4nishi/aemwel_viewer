@@ -71,7 +71,7 @@ class MainWindow(QMainWindow):
 
         self.ui.pushButton_addAxis.clicked.connect(self.addAxis)
         
-        self.ui.comboBox_plane.activated.connect(self.set_pickup_combo)
+        self.ui.comboBox_plane.activated.connect(self.set3dProperty)
 
         ## show this widget
         self.show()
@@ -86,20 +86,25 @@ class MainWindow(QMainWindow):
         self.data = plot.load_data(file_name)
 
         if self.form == PlotForm.heatmap:
-            self.set_pickup_combo()
+            self.set3dProperty()
 
         self.ui.comboBox_x.clear()
         self.ui.comboBox_add.clear()
+        self.ui.comboBox_freq.clear()
 
         for k in self.data.keys():
+            if k in ['rad', 'x', 'y', 'z']:
+                continue
+
             self.ui.comboBox_x.addItem(k)
             self.ui.comboBox_add.addItem(k)
+            self.ui.comboBox_freq.addItem(k)
 
 
     def addAxis(self):
         self.ui.listWidget_axes.addItem(self.ui.comboBox_add.currentText())
 
-    def set_pickup_combo(self):
+    def set3dProperty(self):
             plane = self.ui.comboBox_plane.currentText()
             pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
 
@@ -126,14 +131,18 @@ class MainWindow(QMainWindow):
 
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
+
+            plane = self.ui.comboBox_plane.currentText()
+            pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
+            pickup_value = float(self.ui.comboBox_cutting.currentText())
+            freq = self.ui.comboBox_freq.currentText()
+
+            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq)
             
-
-
-        #     c = heatmap.plot(self.canvas.axes, self.data, 0, freq)
-        #     ## color bar
-        #     divider = axes_divider.make_axes_locatable(self.canvas.axes)
-        #     cax = divider.append_axes("right", size="3%", pad="2%")
-        #     self.canvas.fig.colorbar(c, cax=cax)
+            ## color bar
+            divider = axes_divider.make_axes_locatable(self.canvas.axes)
+            cax = divider.append_axes("right", size="3%", pad="2%")
+            self.canvas.fig.colorbar(c, cax=cax)
 
         self.canvas.draw()
 

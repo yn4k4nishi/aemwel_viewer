@@ -3,10 +3,13 @@ import numpy as np
 import matplotlib.pyplot as plt
             
 
-def plot(axes, data, target_z, target_freq):
-    _x = np.take(np.array(data['x']        ), np.where(data['z'] == target_z)[0])
-    _y = np.take(np.array(data['y']        ), np.where(data['z'] == target_z)[0])
-    _z = np.take(np.array(data[target_freq]), np.where(data['z'] == target_z)[0])
+def plot(axes, data, pickup_axis, pickup_value, freq):
+    ax1 = 'xyz'.replace(pickup_axis, '')[0]
+    ax2 = 'xyz'.replace(pickup_axis, '')[1]
+
+    _x = np.take(np.array(data[ax1] ), np.where(data[pickup_axis] == pickup_value)[0])
+    _y = np.take(np.array(data[ax2] ), np.where(data[pickup_axis] == pickup_value)[0])
+    _z = np.take(np.array(data[freq]), np.where(data[pickup_axis] == pickup_value)[0])
 
     ## remove duplicate elements
     x = np.unique(_x)
@@ -28,20 +31,9 @@ def plot(axes, data, target_z, target_freq):
 
         z[i] = _z[t]
 
-    ## create mesh
-    # x_step = x[1] - x[0]
-    # y_step = y[1] - y[0]
-
-    # x_grid = np.append(x, x[-1]+x_step)
-    # y_grid = np.append(y, y[-1]+y_step)
-
-    # x_grid -= x_step/2
-    # y_grid -= y_step/2
-
     z_max = np.max(z)
     z_min = np.min(z)
 
-    # heatmap = axes.pcolormesh( x_grid,y_grid,  z.T, cmap='jet', shading='flat', vmin=z_min, vmax=z_max, clip_on=True)
     heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True)
     
     axes.set_aspect('equal')
@@ -49,18 +41,20 @@ def plot(axes, data, target_z, target_freq):
     return heatmap
 
 if __name__ == "__main__":
-    file = 'data/xyz_phase.csv'
-    data = load_data(file)
+    pass
 
-    fig = plt.figure()
-    axes = fig.add_subplot(111)
+    # file = 'data/xyz_phase.csv'
+    # data = load_data(file)
 
-    target_z = 0.0
-    target_freq = '1680000000.0'
+    # fig = plt.figure()
+    # axes = fig.add_subplot(111)
 
-    axes.set_aspect('equal')
+    # target_z = 0.0
+    # target_freq = '1680000000.0'
 
-    heatmap = plot(axes, data, target_z, target_freq)
-    fig.colorbar(heatmap)
+    # axes.set_aspect('equal')
 
-    plt.show()
+    # heatmap = plot(axes, data, target_z, target_freq)
+    # fig.colorbar(heatmap)
+
+    # plt.show()
