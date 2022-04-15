@@ -1,3 +1,4 @@
+from hashlib import new
 import sys
 import matplotlib
 matplotlib.use('Qt5Agg')
@@ -12,6 +13,7 @@ from mpl_toolkits.axes_grid1 import axes_divider
 
 from ui.main_window import Ui_MainWindow
 
+import plot
 from plot import *
 
 
@@ -67,6 +69,8 @@ class MainWindow(QMainWindow):
         self.ui.actionPolar.triggered.connect(lambda : self.setForm(PlotForm.polar))
         self.ui.actionHeatmap.triggered.connect(lambda : self.setForm(PlotForm.heatmap))
 
+        self.ui.pushButton_addAxis.clicked.connect(self.addAxis)
+
         ## show this widget
         self.show()
     
@@ -74,48 +78,57 @@ class MainWindow(QMainWindow):
         print("setForm : {}".format(form))
         self.form = form
 
-    def setFreqs(self):
-        self.ui.comboBox.clear()
-
-        for f in self.freqs:
-            self.ui.comboBox.addItem(f)
-
     def loadData(self):
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home')[0]
 
-        if self.form == PlotForm.cartesian2D:
-            self.data, self,freqs = cartesian2D.load_data(file_name)
+        self.data = plot.load_data(file_name)
 
-        if self.form == PlotForm.polar:
-            self.data, self.freqs = polar.load_data(file_name)
+        # if self.form == PlotForm.cartesian2D:
+        #     self.data, self,freqs = cartesian2D.load_data(file_name)
 
-        if self.form == PlotForm.heatmap:
-            self.data, self.freqs = heatmap.load_data(file_name)
+        # if self.form == PlotForm.polar:
+        #     self.data, self.freqs = polar.load_data(file_name)
 
-        self.setFreqs()
+        # if self.form == PlotForm.heatmap:
+        #     self.data, self.freqs = heatmap.load_data(file_name)
+
+        self.ui.comboBox_x.clear()
+        self.ui.comboBox_add.clear()
+
+        for k in self.data.keys():
+            self.ui.comboBox_x.addItem(k)
+            self.ui.comboBox_add.addItem(k)
+
+
+    def addAxis(self):
+        self.ui.listWidget_axes.addItem(self.ui.comboBox_add.currentText())
 
     def update(self):
 
-        freq = self.ui.comboBox.currentText()
+        x_axis = self.ui.comboBox_x.currentText()
+        y_axes = [self.ui.listWidget_axes.item(i).text() for i in range(self.ui.listWidget_axes.count())]
+
+        print(x_axis)
+        print(y_axes)
 
         # self.canvas.axes.cla()
         self.canvas.fig.clf()
         
         if self.form == PlotForm.cartesian2D:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
-            cartesian2D.plot(self.canvas.axes)
+            cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes)
 
-        if self.form == PlotForm.polar:
-            self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
-            polar.plot(self.canvas.axes, self.data, freq)
+        # if self.form == PlotForm.polar:
+        #     self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
+        #     polar.plot(self.canvas.axes, self.data, freq)
 
-        if self.form == PlotForm.heatmap:
-            self.canvas.axes = self.canvas.fig.add_subplot(111)
-            c = heatmap.plot(self.canvas.axes, self.data, 0, freq)
-            ## color bar
-            divider = axes_divider.make_axes_locatable(self.canvas.axes)
-            cax = divider.append_axes("right", size="3%", pad="2%")
-            self.canvas.fig.colorbar(c, cax=cax)
+        # if self.form == PlotForm.heatmap:
+        #     self.canvas.axes = self.canvas.fig.add_subplot(111)
+        #     c = heatmap.plot(self.canvas.axes, self.data, 0, freq)
+        #     ## color bar
+        #     divider = axes_divider.make_axes_locatable(self.canvas.axes)
+        #     cax = divider.append_axes("right", size="3%", pad="2%")
+        #     self.canvas.fig.colorbar(c, cax=cax)
 
         self.canvas.draw()
 
