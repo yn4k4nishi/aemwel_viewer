@@ -82,7 +82,8 @@ class MainWindow(QMainWindow):
         self.form = form
 
     def loadData(self):
-        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home')[0]
+        filter = "csv(*.csv);;Touch Stone(*.s*p);;All Files(*)" 
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
 
         self.data = plot.load_data(file_name)
 
@@ -95,7 +96,7 @@ class MainWindow(QMainWindow):
 
         for k in self.data.keys():
             self.ui.comboBox_x.addItem(k)
-            
+
             if k in ['rad', 'x', 'y', 'z']:
                 continue
 
