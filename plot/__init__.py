@@ -14,20 +14,25 @@ class PlotForm(Enum):
     heatmap     = 3
         
 def load_data(file_name):
-    with open(file_name, 'r') as f:
-        reader = csv.reader(f)
 
-        reader.__next__()
-        reader.__next__()
+    if file_name.endswith('.csv'):
+        with open(file_name, 'r') as f:
+            reader = csv.reader(f)
 
-        header = reader.__next__()
+            reader.__next__()
+            reader.__next__()
+
+            header = reader.__next__()
+        
+            values = [np.array([])] * len(header)
+
+            data = dict(zip(header, values))
+
+            for r in reader:
+                for i in range(len(header)):
+                    data[header[i]] = np.append(data[header[i]], float(r[i]))
+
+            return data
     
-        values = [np.array([])] * len(header)
-
-        data = dict(zip(header, values))
-
-        for r in reader:
-            for i in range(len(header)):
-                data[header[i]] = np.append(data[header[i]], float(r[i]))
-
-        return data
+    elif file_name.endswith('.s2p'):
+        pass

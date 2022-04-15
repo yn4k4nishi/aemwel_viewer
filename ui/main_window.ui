@@ -83,7 +83,7 @@
              <item>
               <widget class="QPushButton" name="pushButton_addAxis">
                <property name="text">
-                <string>Add Plot Data</string>
+                <string>Add</string>
                </property>
               </widget>
              </item>

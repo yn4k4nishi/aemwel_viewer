@@ -163,7 +163,7 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "AEMWEL Viewer"))
         self.groupBox.setTitle(_translate("MainWindow", "X Axis"))
         self.groupBox_2.setTitle(_translate("MainWindow", "Y Aixs"))
-        self.pushButton_addAxis.setText(_translate("MainWindow", "Add Plot Data"))
+        self.pushButton_addAxis.setText(_translate("MainWindow", "Add"))
         self.pushButton_clear.setText(_translate("MainWindow", "Clear"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "2D"))
         self.groupBox_3.setTitle(_translate("MainWindow", "Plane"))
