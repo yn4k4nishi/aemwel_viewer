@@ -63,6 +63,7 @@ class MainWindow(QMainWindow):
 
         ## connect ui and function
         self.ui.pushButton_apply.clicked.connect(self.update)
+        self.ui.pushButton_clear.clicked.connect(self.ui.listWidget_axes.clear)
         self.ui.actionOpen.triggered.connect(self.loadData)
 
         self.ui.actionCar2D.triggered.connect(lambda : self.setForm(PlotForm.cartesian2D))
@@ -93,10 +94,11 @@ class MainWindow(QMainWindow):
         self.ui.comboBox_freq.clear()
 
         for k in self.data.keys():
+            self.ui.comboBox_x.addItem(k)
+            
             if k in ['rad', 'x', 'y', 'z']:
                 continue
 
-            self.ui.comboBox_x.addItem(k)
             self.ui.comboBox_add.addItem(k)
             self.ui.comboBox_freq.addItem(k)
 
