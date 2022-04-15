@@ -1,30 +1,6 @@
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
-
-
-def load_data(file_name):
-    with open(file_name, 'r') as f:
-        reader = csv.reader(f)
-
-        reader.__next__()
-        reader.__next__()
-
-        header = reader.__next__()
-
-        freqs = header[3:]
-    
-        values = [np.array([])] * len(header)
-
-        data = dict(zip(header, values))
-
-        for r in reader:
-            for i in range(len(header)):
-                data[header[i]] = np.append(data[header[i]], float(r[i]))
-
-
-        return data, freqs
-
             
 
 def plot(axes, data, target_z, target_freq):

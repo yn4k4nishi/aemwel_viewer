@@ -1,36 +1,18 @@
+from cProfile import label
 import csv
 from matplotlib import projections
 import numpy as np
 import matplotlib.pyplot as plt
 
 
-def load_data(file_name):
-    with open(file_name, 'r') as f:
-        reader = csv.reader(f)
-
-        reader.__next__()
-        reader.__next__()
-
-        header = reader.__next__()
-
-        freqs = header[1:]
+def plot(axes, data, x_axis, y_axes):
     
-        values = [np.array([])] * len(header)
+    angle = data[x_axis] / 180 * np.pi
+    
+    for y_axis in y_axes:
+        mag   = data[y_axis]
 
-        data = dict(zip(header, values))
-
-        for r in reader:
-            for i in range(len(header)):
-                data[header[i]] = np.append(data[header[i]], float(r[i]))
-
-
-        return data, freqs
-
-def plot(axes, data, target_freq):
-    angle = data['rad'] / 180 * np.pi
-    mag   = data[target_freq]
-
-    axes.plot(angle, mag)
+        axes.plot(angle, mag, label=y_axis)
 
     axes.axes.set_theta_zero_location('N')
     axes.set_theta_direction(-1)
@@ -40,14 +22,16 @@ def plot(axes, data, target_freq):
 
 
 if __name__ == "__main__":
-    file = 'data/radiation_pattern.csv'
-    data = load_data(file)
+    pass
 
-    fig = plt.figure()
-    axes = fig.add_subplot(111, projection='polar')
+    # file = 'data/radiation_pattern.csv'
+    # data = load_data(file)
 
-    target_freq = '6200000000.0'
+    # fig = plt.figure()
+    # axes = fig.add_subplot(111, projection='polar')
 
-    plot(axes, data, target_freq)
+    # target_freq = '6200000000.0'
 
-    plt.show()
+    # plot(axes, data, target_freq)
+
+    # plt.show()

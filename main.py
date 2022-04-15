@@ -70,6 +70,8 @@ class MainWindow(QMainWindow):
         self.ui.actionHeatmap.triggered.connect(lambda : self.setForm(PlotForm.heatmap))
 
         self.ui.pushButton_addAxis.clicked.connect(self.addAxis)
+        
+        self.ui.comboBox_plane.activated.connect(self.set_pickup_combo)
 
         ## show this widget
         self.show()
@@ -83,14 +85,8 @@ class MainWindow(QMainWindow):
 
         self.data = plot.load_data(file_name)
 
-        # if self.form == PlotForm.cartesian2D:
-        #     self.data, self,freqs = cartesian2D.load_data(file_name)
-
-        # if self.form == PlotForm.polar:
-        #     self.data, self.freqs = polar.load_data(file_name)
-
-        # if self.form == PlotForm.heatmap:
-        #     self.data, self.freqs = heatmap.load_data(file_name)
+        if self.form == PlotForm.heatmap:
+            self.set_pickup_combo()
 
         self.ui.comboBox_x.clear()
         self.ui.comboBox_add.clear()
@@ -103,13 +99,19 @@ class MainWindow(QMainWindow):
     def addAxis(self):
         self.ui.listWidget_axes.addItem(self.ui.comboBox_add.currentText())
 
+    def set_pickup_combo(self):
+            plane = self.ui.comboBox_plane.currentText()
+            pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
+
+            self.ui.comboBox_cutting.clear()
+            for p in np.unique(self.data[pickup_axis]):
+                self.ui.comboBox_cutting.addItem(str(p))
+
     def update(self):
 
         x_axis = self.ui.comboBox_x.currentText()
         y_axes = [self.ui.listWidget_axes.item(i).text() for i in range(self.ui.listWidget_axes.count())]
 
-        print(x_axis)
-        print(y_axes)
 
         # self.canvas.axes.cla()
         self.canvas.fig.clf()
@@ -118,12 +120,15 @@ class MainWindow(QMainWindow):
             self.canvas.axes = self.canvas.fig.add_subplot(111)
             cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes)
 
-        # if self.form == PlotForm.polar:
-        #     self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
-        #     polar.plot(self.canvas.axes, self.data, freq)
+        if self.form == PlotForm.polar:
+            self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
+            polar.plot(self.canvas.axes, self.data, x_axis, y_axes)
 
-        # if self.form == PlotForm.heatmap:
-        #     self.canvas.axes = self.canvas.fig.add_subplot(111)
+        if self.form == PlotForm.heatmap:
+            self.canvas.axes = self.canvas.fig.add_subplot(111)
+            
+
+
         #     c = heatmap.plot(self.canvas.axes, self.data, 0, freq)
         #     ## color bar
         #     divider = axes_divider.make_axes_locatable(self.canvas.axes)
