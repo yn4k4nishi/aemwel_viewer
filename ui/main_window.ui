@@ -196,7 +196,7 @@
              </sizepolicy>
             </property>
             <property name="title">
-             <string>Offset</string>
+             <string>Phase Offset</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_8">
              <item>

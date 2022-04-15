@@ -187,7 +187,7 @@ class Ui_MainWindow(object):
         self.comboBox_plane.setItemText(2, _translate("MainWindow", "zx"))
         self.label_2.setText(_translate("MainWindow", "coordinate"))
         self.groupBox_4.setTitle(_translate("MainWindow", "Freq"))
-        self.groupBox_5.setTitle(_translate("MainWindow", "Offset"))
+        self.groupBox_5.setTitle(_translate("MainWindow", "Phase Offset"))
         self.lineEdit_offset.setText(_translate("MainWindow", "0"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "3D"))
         self.pushButton_apply.setText(_translate("MainWindow", "Apply"))
