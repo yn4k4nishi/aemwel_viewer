@@ -1,7 +1,5 @@
 import sys
 import matplotlib
-from matplotlib import projections
-
 matplotlib.use('Qt5Agg')
 
 from PyQt5.QtCore import *
@@ -76,19 +74,29 @@ class MainWindow(QMainWindow):
         print("setForm : {}".format(form))
         self.form = form
 
+    def setFreqs(self):
+        self.ui.comboBox.clear()
+
+        for f in self.freqs:
+            self.ui.comboBox.addItem(f)
+
     def loadData(self):
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home')[0]
 
         if self.form == PlotForm.cartesian2D:
-            self.data = cartesian2D.load_data(file_name)
+            self.data, self,freqs = cartesian2D.load_data(file_name)
 
         if self.form == PlotForm.polar:
-            self.data = polar.load_data(file_name)
+            self.data, self.freqs = polar.load_data(file_name)
 
         if self.form == PlotForm.heatmap:
-            self.data = heatmap.load_data(file_name)
+            self.data, self.freqs = heatmap.load_data(file_name)
+
+        self.setFreqs()
 
     def update(self):
+
+        freq = self.ui.comboBox.currentText()
 
         # self.canvas.axes.cla()
         self.canvas.fig.clf()
@@ -99,11 +107,11 @@ class MainWindow(QMainWindow):
 
         if self.form == PlotForm.polar:
             self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
-            polar.plot(self.canvas.axes, self.data, '6200000000.0')
+            polar.plot(self.canvas.axes, self.data, freq)
 
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
-            c = heatmap.plot(self.canvas.axes, self.data, 0, '1680000000.0')
+            c = heatmap.plot(self.canvas.axes, self.data, 0, freq)
             ## color bar
             divider = axes_divider.make_axes_locatable(self.canvas.axes)
             cax = divider.append_axes("right", size="3%", pad="2%")

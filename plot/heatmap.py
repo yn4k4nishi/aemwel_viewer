@@ -11,6 +11,8 @@ def load_data(file_name):
         reader.__next__()
 
         header = reader.__next__()
+
+        freqs = header[3:]
     
         values = [np.array([])] * len(header)
 
@@ -21,7 +23,7 @@ def load_data(file_name):
                 data[header[i]] = np.append(data[header[i]], float(r[i]))
 
 
-        return data
+        return data, freqs
 
             
 
