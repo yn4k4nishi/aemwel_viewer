@@ -11,9 +11,9 @@ jobs:
           python-version: '3.x'
           cache: 'pip'
       - name: Install packages
-        runs: pip install -r requirements.txt
+        run: pip install -r requirements.txt
       - name: Build
-        runs: |
+        run: |
           sphinx-apidoc -f -o docs/source/api/ .
           sphinx-build docs/source/ docs/build/
       - name: Deploy
