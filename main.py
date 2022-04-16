@@ -28,7 +28,6 @@ class MplCanvas(FigureCanvasQTAgg):
         self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
 
-
 class MainWindow(QMainWindow):
 
     form = PlotForm.cartesian2D
