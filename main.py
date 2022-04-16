@@ -154,6 +154,8 @@ class MainWindow(QMainWindow):
             cax = divider.append_axes("right", size="3%", pad="2%")
             self.canvas.fig.colorbar(c, cax=cax)
 
+        self.canvas.fig.legend()
+
         self.canvas.draw()
 
 if __name__ == "__main__":
