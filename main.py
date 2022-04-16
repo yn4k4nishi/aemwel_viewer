@@ -1,4 +1,7 @@
-from hashlib import new
+"""Main Module
+
+"""
+
 import sys
 import matplotlib
 matplotlib.use('Qt5Agg')
@@ -18,8 +21,27 @@ from plot import *
 
 
 class MplCanvas(FigureCanvasQTAgg):
+    """Matplotlib Canvas
+
+    PyQt5にMatplotlibを埋め込むためのクラス
+
+    Attributes
+    ----------
+    fig : :obj: `Figure`
+        matplotlib.figure object
+    axes : :obj: `matplotlib.axes`
+    """
 
     def __init__(self, parent=None, width=5, height=4, dpi=100):
+        """初期化
+        
+        Parameters
+        ----------
+        parent : :obj:Qt Parent
+        width  : int 図の幅
+        height : int 図の高さ
+        dpi    : int dots per inch
+        """
         self.fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.fig.add_subplot(111)
         super(MplCanvas, self).__init__(self.fig)
