@@ -7,4 +7,3 @@ API
     main
     plot
     ui
-    modules
