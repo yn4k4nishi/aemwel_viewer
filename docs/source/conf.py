@@ -33,6 +33,7 @@ release = 'v1.0'
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.githubpages',
+    'sphinx.ext.napoleon',
     'sphinx_rtd_theme',
     'myst_parser',
 ]
