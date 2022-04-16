@@ -10,6 +10,7 @@ Welcome to AEMWEL Viewer's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   usage
    api/index
 
 Indices and tables
