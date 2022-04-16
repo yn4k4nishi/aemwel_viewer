@@ -6,11 +6,16 @@
 Welcome to AEMWEL Viewer's documentation!
 =========================================
 
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+   about
+   install
    usage
+   contribute
    api/index
 
 Indices and tables
