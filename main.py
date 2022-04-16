@@ -70,8 +70,12 @@ class MainWindow(QMainWindow):
         self.ui.actionPolar.triggered.connect(lambda : self.setForm(PlotForm.polar))
         self.ui.actionHeatmap.triggered.connect(lambda : self.setForm(PlotForm.heatmap))
 
+
+        self.ui.actionCar2D.triggered.connect(lambda : self.ui.tabWidget.setCurrentIndex(0))
+        self.ui.actionPolar.triggered.connect(lambda : self.ui.tabWidget.setCurrentIndex(0))
+        self.ui.actionHeatmap.triggered.connect(lambda : self.ui.tabWidget.setCurrentIndex(1))
+
         self.ui.pushButton_addAxis.clicked.connect(self.addAxis)
-        
         self.ui.comboBox_plane.activated.connect(self.set3dProperty)
 
         ## show this widget
@@ -85,6 +89,9 @@ class MainWindow(QMainWindow):
         filter = "csv(*.csv);;Touch Stone(*.s*p);;All Files(*)" 
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
 
+        if not file_name:
+            return
+
         self.data = plot.load_data(file_name)
 
         if self.form == PlotForm.heatmap:
@@ -97,7 +104,7 @@ class MainWindow(QMainWindow):
         for k in self.data.keys():
             self.ui.comboBox_x.addItem(k)
 
-            if k in ['rad', 'x', 'y', 'z']:
+            if k in ['angle[rad]', 'x', 'y', 'z']:
                 continue
 
             self.ui.comboBox_add.addItem(k)
