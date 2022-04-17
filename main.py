@@ -27,9 +27,9 @@ class MplCanvas(FigureCanvasQTAgg):
 
     Attributes
     ----------
-    fig : :obj: `Figure`
+    fig : :obj: `matplotlib.Figure`
         matplotlib.figure object
-    axes : :obj: `matplotlib.axes`
+    axes : :obj: `matplotlib.Axes`
     """
 
     def __init__(self, parent=None, width=5, height=4, dpi=100):
@@ -51,11 +51,28 @@ class MplCanvas(FigureCanvasQTAgg):
 
 
 class MainWindow(QMainWindow):
+    """Qt メインウィンドウ"""
 
     form = PlotForm.cartesian2D
+    """:obj: `plot.PlotFrom` プロットの形式"""
+
     data = {}
+    """dict プロットに使うデータ"""
+
 
     def __init__(self, parent=None):
+        """初期化
+        
+        Parameters
+        ----------
+        parent : :obj: Qt parent
+
+        Attributes
+        ----------
+        ui      : :obj:`Ui_MainWindow`
+        canvas  : :obj:`MplCanvas`
+        toolbar : :obj:`FigureCanvasQTAgg`, `NavigationToolbar2QT`
+        """
         super().__init__(parent)
 
         self.ui = Ui_MainWindow()
@@ -103,10 +120,22 @@ class MainWindow(QMainWindow):
         self.show()
     
     def setForm(self, form):
+        """プロット形式の設定
+        
+        Parameters
+        ----------
+        form : :obj:`plot.PlotForm`
+            プロットの形式
+        """
         print("setForm : {}".format(form))
         self.form = form
 
     def loadData(self):
+        """データの読み込み
+        
+        ファイルダイアログを開き読み込むファイルを指定する
+        読み込んだファイルを元にComboBoxを設定する
+        """
         filter = "csv(*.csv);;Touch Stone(*.s*p);;All Files(*)" 
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
 
@@ -133,17 +162,20 @@ class MainWindow(QMainWindow):
 
 
     def addAxis(self):
+        """プロットする軸(データ系列)の追加"""
         self.ui.listWidget_axes.addItem(self.ui.comboBox_add.currentText())
 
     def set3dProperty(self):
-            plane = self.ui.comboBox_plane.currentText()
-            pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
+        """3Dのプロパティの設定"""
+        plane = self.ui.comboBox_plane.currentText()
+        pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
 
-            self.ui.comboBox_cutting.clear()
-            for p in np.unique(self.data[pickup_axis]):
-                self.ui.comboBox_cutting.addItem(str(p))
+        self.ui.comboBox_cutting.clear()
+        for p in np.unique(self.data[pickup_axis]):
+            self.ui.comboBox_cutting.addItem(str(p))
 
     def update(self):
+        """プロットの更新"""
 
         x_axis = self.ui.comboBox_x.currentText()
         y_axes = [self.ui.listWidget_axes.item(i).text() for i in range(self.ui.listWidget_axes.count())]
