@@ -1,9 +1,28 @@
-import csv
 import numpy as np
-import matplotlib.pyplot as plt
             
 
-def plot(axes, data, pickup_axis, pickup_value, freq):
+def plot(axes, data, pickup_axis, pickup_value, freq, offset):
+    """ヒートマップのプロット
+    
+    Parameters
+    ----------
+    axes         : :obj:`matplotlib.Axes`
+        プロットする軸
+    data         : dict
+        ファイルから読み込んだデータ
+    pickup_axis  : str
+        断面をとる軸
+    pickup_value : float
+        断面をとる軸の値
+    freq         : str
+        使用する周波数を示すデータ系列名
+    offset       : float
+        位相勾配を見るときの位相のオフセット
+
+    Returns
+    -------
+    :obj:`matplotlib.collections.QuadMesh`
+    """
     ax1 = 'xyz'.replace(pickup_axis, '')[0]
     ax2 = 'xyz'.replace(pickup_axis, '')[1]
 
@@ -31,8 +50,12 @@ def plot(axes, data, pickup_axis, pickup_value, freq):
 
         z[i] = _z[t]
 
+    z += offset
+    z = (z + 180) % 360 - 180 
+
     z_max = np.max(z)
     z_min = np.min(z)
+
 
     heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True)
     

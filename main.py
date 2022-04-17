@@ -1,4 +1,7 @@
-from hashlib import new
+"""Main Module
+
+"""
+
 import sys
 import matplotlib
 matplotlib.use('Qt5Agg')
@@ -18,8 +21,25 @@ from plot import *
 
 
 class MplCanvas(FigureCanvasQTAgg):
+    """PyQt5にMatplotlibを埋め込むためのクラス
+
+    Attributes
+    ----------
+    fig : :obj: `matplotlib.Figure`
+        matplotlib.figure object
+    axes : :obj: `matplotlib.Axes`
+    """
 
     def __init__(self, parent=None, width=5, height=4, dpi=100):
+        """初期化
+        
+        Parameters
+        ----------
+        parent : :obj:Qt Parent
+        width  : int 図の幅
+        height : int 図の高さ
+        dpi    : int dots per inch
+        """
         self.fig = Figure(figsize=(width, height), dpi=dpi)
         self.axes = self.fig.add_subplot(111)
         super(MplCanvas, self).__init__(self.fig)
@@ -28,13 +48,29 @@ class MplCanvas(FigureCanvasQTAgg):
         self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
 
-
 class MainWindow(QMainWindow):
+    """Qt メインウィンドウ"""
 
     form = PlotForm.cartesian2D
+    """:obj: `plot.PlotFrom` プロットの形式"""
+
     data = {}
+    """dict プロットに使うデータ"""
+
 
     def __init__(self, parent=None):
+        """初期化
+        
+        Parameters
+        ----------
+        parent : :obj: Qt parent
+
+        Attributes
+        ----------
+        ui      : :obj:`Ui_MainWindow`
+        canvas  : :obj:`MplCanvas`
+        toolbar : :obj:`FigureCanvasQTAgg`, `NavigationToolbar2QT`
+        """
         super().__init__(parent)
 
         self.ui = Ui_MainWindow()
@@ -70,20 +106,39 @@ class MainWindow(QMainWindow):
         self.ui.actionPolar.triggered.connect(lambda : self.setForm(PlotForm.polar))
         self.ui.actionHeatmap.triggered.connect(lambda : self.setForm(PlotForm.heatmap))
 
+
+        self.ui.actionCar2D.triggered.connect(lambda : self.ui.tabWidget.setCurrentIndex(0))
+        self.ui.actionPolar.triggered.connect(lambda : self.ui.tabWidget.setCurrentIndex(0))
+        self.ui.actionHeatmap.triggered.connect(lambda : self.ui.tabWidget.setCurrentIndex(1))
+
         self.ui.pushButton_addAxis.clicked.connect(self.addAxis)
-        
         self.ui.comboBox_plane.activated.connect(self.set3dProperty)
 
         ## show this widget
         self.show()
     
     def setForm(self, form):
+        """プロット形式の設定
+        
+        Parameters
+        ----------
+        form : :obj:`plot.PlotForm`
+            プロットの形式
+        """
         print("setForm : {}".format(form))
         self.form = form
 
     def loadData(self):
+        """データの読み込み
+        
+        ファイルダイアログを開き読み込むファイルを指定する
+        読み込んだファイルを元にComboBoxを設定する
+        """
         filter = "csv(*.csv);;Touch Stone(*.s*p);;All Files(*)" 
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
+
+        if not file_name:
+            return
 
         self.data = plot.load_data(file_name)
 
@@ -97,7 +152,7 @@ class MainWindow(QMainWindow):
         for k in self.data.keys():
             self.ui.comboBox_x.addItem(k)
 
-            if k in ['rad', 'x', 'y', 'z']:
+            if k in ['angle[rad]', 'x', 'y', 'z']:
                 continue
 
             self.ui.comboBox_add.addItem(k)
@@ -105,17 +160,20 @@ class MainWindow(QMainWindow):
 
 
     def addAxis(self):
+        """プロットする軸(データ系列)の追加"""
         self.ui.listWidget_axes.addItem(self.ui.comboBox_add.currentText())
 
     def set3dProperty(self):
-            plane = self.ui.comboBox_plane.currentText()
-            pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
+        """3Dのプロパティの設定"""
+        plane = self.ui.comboBox_plane.currentText()
+        pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
 
-            self.ui.comboBox_cutting.clear()
-            for p in np.unique(self.data[pickup_axis]):
-                self.ui.comboBox_cutting.addItem(str(p))
+        self.ui.comboBox_cutting.clear()
+        for p in np.unique(self.data[pickup_axis]):
+            self.ui.comboBox_cutting.addItem(str(p))
 
     def update(self):
+        """プロットの更新"""
 
         x_axis = self.ui.comboBox_x.currentText()
         y_axes = [self.ui.listWidget_axes.item(i).text() for i in range(self.ui.listWidget_axes.count())]
@@ -139,13 +197,16 @@ class MainWindow(QMainWindow):
             pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
             pickup_value = float(self.ui.comboBox_cutting.currentText())
             freq = self.ui.comboBox_freq.currentText()
+            offset = float(self.ui.lineEdit_offset.text())
 
-            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq)
+            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, offset)
             
             ## color bar
             divider = axes_divider.make_axes_locatable(self.canvas.axes)
             cax = divider.append_axes("right", size="3%", pad="2%")
             self.canvas.fig.colorbar(c, cax=cax)
+
+        self.canvas.fig.legend()
 
         self.canvas.draw()
 

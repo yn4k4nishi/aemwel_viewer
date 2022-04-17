@@ -1,0 +1,23 @@
+name: learn-github-actions
+on: [push]
+jobs:
+  github-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+      - name: Install packages
+        run: pip install -r requirements.txt
+      - name: Build
+        run: |
+          sphinx-apidoc -f -o docs/source/api/ .
+          sphinx-build docs/source/ docs/build/
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/build
