@@ -21,9 +21,7 @@ from plot import *
 
 
 class MplCanvas(FigureCanvasQTAgg):
-    """Matplotlib Canvas
-
-    PyQt5にMatplotlibを埋め込むためのクラス
+    """PyQt5にMatplotlibを埋め込むためのクラス
 
     Attributes
     ----------
