@@ -16,7 +16,7 @@ Welcome to AEMWEL Viewer's documentation!
    install
    usage
    contribute
-   api/modules
+   api/index
 
 Indices and tables
 ==================
