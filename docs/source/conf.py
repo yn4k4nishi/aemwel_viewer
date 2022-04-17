@@ -20,8 +20,6 @@ warnings.filterwarnings('ignore')
 import skrf as rf 
 rf.setup_pylab()
 
-import matplotlib.pylab
-
 # -- Project information -----------------------------------------------------
 
 project = 'AEMWEL Viewer'
