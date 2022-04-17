@@ -12,15 +12,13 @@
 
 import os
 import sys
-sys.path.insert(0, os.path.abspath('../../main.py'))
 sys.path.insert(0, os.path.abspath('../../'))
 
 
 import skrf as rf 
 rf.setup_pylab()
 
-import matplotlib
-matplotlib.use('Qt5Agg')
+import matplotlib.pylab
 
 # -- Project information -----------------------------------------------------
 
