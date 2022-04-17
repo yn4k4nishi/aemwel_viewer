@@ -6,4 +6,5 @@ aemwel_viewer
 
    main
    plot
+   setup
    ui
