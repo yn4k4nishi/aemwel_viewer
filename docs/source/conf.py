@@ -19,6 +19,9 @@ sys.path.insert(0, os.path.abspath('../../'))
 import skrf as rf 
 rf.setup_pylab()
 
+import matplotlib
+matplotlib.use('Qt5Agg')
+
 # -- Project information -----------------------------------------------------
 
 project = 'AEMWEL Viewer'
