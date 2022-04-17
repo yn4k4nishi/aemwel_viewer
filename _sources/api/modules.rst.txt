@@ -2,7 +2,7 @@ aemwel_viewer
 =============
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4
 
    main
    plot
