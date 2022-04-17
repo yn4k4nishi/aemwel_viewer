@@ -77,14 +77,67 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline"></a></h2>
 </section>
-<section id="plot-cartesian2d-module">
-<h2>plot.cartesian2D module<a class="headerlink" href="#plot-cartesian2d-module" title="Permalink to this headline"></a></h2>
+<section id="module-plot.cartesian2D">
+<span id="plot-cartesian2d-module"></span><h2>plot.cartesian2D module<a class="headerlink" href="#module-plot.cartesian2D" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="plot.cartesian2D.plot">
+<span class="sig-prename descclassname"><span class="pre">plot.cartesian2D.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.cartesian2D.plot" title="Permalink to this definition"></a></dt>
+<dd><p>2次元直交座標のプロット</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axes</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.Axes</span></code>) -- プロットする軸</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- ファイルから読み込んだデータ</p></li>
+<li><p><strong>x_axis</strong> (<em>str</em>) -- x軸に使用するデータ系列名</p></li>
+<li><p><strong>y_axes</strong> (<em>list of str</em>) -- y軸に使用するデータ系列名のリスト</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="plot-heatmap-module">
-<h2>plot.heatmap module<a class="headerlink" href="#plot-heatmap-module" title="Permalink to this headline"></a></h2>
+<section id="module-plot.heatmap">
+<span id="plot-heatmap-module"></span><h2>plot.heatmap module<a class="headerlink" href="#module-plot.heatmap" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="plot.heatmap.plot">
+<span class="sig-prename descclassname"><span class="pre">plot.heatmap.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pickup_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pickup_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">freq</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.heatmap.plot" title="Permalink to this definition"></a></dt>
+<dd><p>ヒートマップのプロット</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axes</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.Axes</span></code>) -- プロットする軸</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- ファイルから読み込んだデータ</p></li>
+<li><p><strong>pickup_axis</strong> (<em>str</em>) -- 断面をとる軸</p></li>
+<li><p><strong>pickup_value</strong> (<em>float</em>) -- 断面をとる軸の値</p></li>
+<li><p><strong>freq</strong> (<em>str</em>) -- 使用する周波数を示すデータ系列名</p></li>
+<li><p><strong>offset</strong> (<em>float</em>) -- 位相勾配を見るときの位相のオフセット</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.collections.QuadMesh</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="plot-polar-module">
-<h2>plot.polar module<a class="headerlink" href="#plot-polar-module" title="Permalink to this headline"></a></h2>
+<section id="module-plot.polar">
+<span id="plot-polar-module"></span><h2>plot.polar module<a class="headerlink" href="#module-plot.polar" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="plot.polar.plot">
+<span class="sig-prename descclassname"><span class="pre">plot.polar.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.polar.plot" title="Permalink to this definition"></a></dt>
+<dd><p>極座標プロット</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>axes</strong> (<code class="xref py py-obj docutils literal notranslate"><span class="pre">matplotlib.Axes</span></code>) -- プロットする軸</p></li>
+<li><p><strong>data</strong> (<em>dict</em>) -- ファイルから読み込んだデータ</p></li>
+<li><p><strong>x_axis</strong> (<em>str</em>) -- x軸のデータ系列名</p></li>
+<li><p><strong>y_axes</strong> (<em>str</em>) -- y軸のデータ系列名</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-contents">
 <h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
