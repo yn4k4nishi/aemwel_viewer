@@ -15,8 +15,6 @@ jobs:
           cache: 'pip'
       - name: Install packages
         run: pip install -r requirements.txt
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v2
       - name: Build
         run: |
           sphinx-apidoc -f -o docs/source/api/ . 
