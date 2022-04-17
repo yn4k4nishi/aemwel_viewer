@@ -1,8 +1,3 @@
-from operator import ne
-from plot import cartesian2D
-from plot import polar
-from plot import heatmap
-
 from enum import Enum
 
 import csv
@@ -12,12 +7,38 @@ import skrf as rf
 
 
 class PlotForm(Enum):
+    """プロットの形式"""
+
     cartesian2D = 1
+    """2次元の直交座標"""
+
     polar       = 2
+    """2次元の極座標"""
+    
     heatmap     = 3
+    """ヒートマップ"""
         
 def load_data(file_name):
+    """データの読み込み
+    
+    Parameters
+    ----------
+    file_name : str 
+        データを読み込むファイル
 
+    Returns
+    -------
+    dict
+        Keyにデータ系列の名前を持ち, numpy.arrayとしてデータを持つ
+
+    Examples
+    --------
+        >>> data = load_data(file)
+        >>> print(data['x'])
+        [     0.      1.      2. ... 98. 99. 100.]
+    """
+
+    ## CSV
     if file_name.endswith('.csv'):
         with open(file_name, 'r') as f:
             reader = csv.reader(f)
@@ -36,6 +57,7 @@ def load_data(file_name):
 
             return data
     
+    ## Touch Stone
     elif file_name.endswith('.s2p') or file_name.endswith('.s4p'):
         net = rf.Network(file_name)
 
