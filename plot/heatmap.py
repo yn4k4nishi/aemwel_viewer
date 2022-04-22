@@ -1,7 +1,7 @@
 import numpy as np
             
 
-def plot(axes, data, pickup_axis, pickup_value, freq, offset):
+def plot(axes, data, pickup_axis, pickup_value, freq, **kwargs):
     """ヒートマップのプロット
     
     Parameters
@@ -50,12 +50,18 @@ def plot(axes, data, pickup_axis, pickup_value, freq, offset):
 
         z[i] = _z[t]
 
-    z += offset
-    z = (z + 180) % 360 - 180 
+    if 'offset' in kwargs:
+        z += kwargs['offset']
+        z = (z + 180) % 360 - 180 
 
     z_max = np.max(z)
     z_min = np.min(z)
 
+    if 'vmax' in kwargs:
+        z_max = kwargs['vmax']
+    
+    if 'vmin' in kwargs:
+        z_min = kwargs['vmin']
 
     heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True)
     
