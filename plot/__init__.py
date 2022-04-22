@@ -1,3 +1,7 @@
+from plot import cartesian2D
+from plot import heatmap
+from plot import polar
+
 from enum import Enum
 
 import csv
