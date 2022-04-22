@@ -134,11 +134,13 @@ class MainWindow(QMainWindow):
         ファイルダイアログを開き読み込むファイルを指定する
         読み込んだファイルを元にComboBoxを設定する
         """
-        filter = "csv(*.csv);;Touch Stone(*.s*p);;All Files(*)" 
+        filter = "All Files(*);;csv(*.csv);;Touch Stone(*.s*p)" 
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
 
         if not file_name:
             return
+        
+        self.ui.label_path.setText(file_name)
 
         self.data = plot.load_data(file_name)
 
