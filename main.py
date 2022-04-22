@@ -187,10 +187,12 @@ class MainWindow(QMainWindow):
         if self.form == PlotForm.cartesian2D:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
             cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes)
+            self.canvas.fig.legend()
 
         if self.form == PlotForm.polar:
             self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
             polar.plot(self.canvas.axes, self.data, x_axis, y_axes)
+            self.canvas.fig.legend()
 
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
@@ -211,8 +213,6 @@ class MainWindow(QMainWindow):
             divider = axes_divider.make_axes_locatable(self.canvas.axes)
             cax = divider.append_axes("right", size="3%", pad="2%")
             self.canvas.fig.colorbar(c, cax=cax)
-
-        self.canvas.fig.legend()
 
         self.canvas.draw()
 

@@ -1,3 +1,4 @@
+from cProfile import label
 import numpy as np
             
 
@@ -63,7 +64,7 @@ def plot(axes, data, pickup_axis, pickup_value, freq, **kwargs):
     if 'vmin' in kwargs:
         z_min = kwargs['vmin']
 
-    heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True)
+    heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True, label='heatmap')
     
     axes.set_aspect('equal')
 
