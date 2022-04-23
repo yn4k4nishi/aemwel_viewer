@@ -1,7 +1,6 @@
 """Main Module
 
 """
-
 import sys
 import matplotlib
 matplotlib.use('Qt5Agg')
@@ -134,6 +133,7 @@ class MainWindow(QMainWindow):
         ファイルダイアログを開き読み込むファイルを指定する
         読み込んだファイルを元にComboBoxを設定する
         """
+
         filter = "All Files(*);;csv(*.csv);;Touch Stone(*.s*p)" 
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
 
@@ -141,8 +141,19 @@ class MainWindow(QMainWindow):
             return
         
         self.ui.label_path.setText(file_name)
+        
+        self.thread = LoadThread(self)
+        self.thread.setFilename(file_name)
+        self.thread.progress.connect(self.ui.progressBar.setValue)
 
-        self.data = plot.load_data(file_name)
+        self.thread.start()
+
+        while self.thread.isRunning():
+            pass
+
+        self.data = self.thread.getData()
+
+        # self.data = plot.load_data(file_name)
 
         if self.form == PlotForm.heatmap:
             self.set3dProperty()

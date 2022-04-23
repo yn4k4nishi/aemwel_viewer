@@ -6,8 +6,11 @@ from enum import Enum
 
 import csv
 import numpy as np
-
 import skrf as rf
+
+from PyQt5.QtCore import *
+from PyQt5.QtGui import *
+
 
 
 class PlotForm(Enum):
@@ -22,7 +25,7 @@ class PlotForm(Enum):
     heatmap     = 3
     """ヒートマップ"""
         
-def load_data(file_name):
+def load_data(file_name, signal=None):
     """データの読み込み
     
     Parameters
@@ -42,6 +45,8 @@ def load_data(file_name):
         [     0.      1.      2. ... 98. 99. 100.]
     """
 
+    n = 0
+
     ## CSV
     if file_name.endswith('.csv'):
         with open(file_name, 'r') as f:
@@ -55,9 +60,18 @@ def load_data(file_name):
 
             data = dict(zip(header, values))
 
+            if signal is not None:
+                n_max = len(header)
+
+
+
             for r in reader:
                 for i in range(len(header)):
                     data[header[i]] = np.append(data[header[i]], float(r[i]))
+                
+                if signal is not None:
+                    signal.emit(n/n_max * 100)
+                    n += 1
 
             return data
     
@@ -78,3 +92,19 @@ def load_data(file_name):
                 data[key] = net.s_deg[:, i, j]
 
         return data
+
+class LoadThread(QThread):
+    progress = pyqtSignal(int)
+
+    def __init__(self, parent):
+        super().__init__(parent)
+
+    def run(self):
+        self.data = load_data(self.file, self.progress)
+
+    def setFilename(self, file):
+        self.file = file
+
+    def getData(self):
+        return self.data
+
