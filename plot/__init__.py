@@ -49,6 +49,7 @@ def load_data(file_name):
 
             header = reader.__next__()
             while '!' in header[0]: ## skip comment
+                print(header[0])
                 header = reader.__next__()
         
             values = [np.array([])] * len(header)
