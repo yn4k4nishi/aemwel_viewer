@@ -4,7 +4,10 @@
 
 import sys
 import matplotlib
-matplotlib.use('Qt5Agg')
+try:
+    matplotlib.use('Qt5Agg')
+except:
+    pass
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *

@@ -14,6 +14,11 @@ import os
 import sys
 sys.path.insert(0, os.path.abspath('../../'))
 
+import warnings
+warnings.filterwarnings('ignore')
+
+import skrf as rf 
+rf.setup_pylab()
 
 # -- Project information -----------------------------------------------------
 

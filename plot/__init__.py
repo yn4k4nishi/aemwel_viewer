@@ -6,8 +6,8 @@ from enum import Enum
 
 import csv
 import numpy as np
-
 import skrf as rf
+import matplotlib
 
 
 class PlotForm(Enum):
@@ -16,10 +16,10 @@ class PlotForm(Enum):
     cartesian2D = 1
     """2次元の直交座標"""
 
-    polar       = 2
+    polar = 2
     """2次元の極座標"""
     
-    heatmap     = 3
+    heatmap = 3
     """ヒートマップ"""
         
 def load_data(file_name):
