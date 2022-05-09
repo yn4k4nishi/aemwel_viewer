@@ -114,6 +114,9 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_addAxis.clicked.connect(self.addAxis)
         self.ui.comboBox_plane.activated.connect(self.set3dProperty)
 
+        self.ui.checkBox_max.clicked.connect(lambda : self.ui.lineEdit_phase_max.setDisabled(not self.ui.checkBox_max.isChecked()))
+        self.ui.checkBox_min.clicked.connect(lambda : self.ui.lineEdit_phase_min.setDisabled(not self.ui.checkBox_min.isChecked()))
+
         ## show this widget
         self.show()
     
@@ -204,8 +207,12 @@ class MainWindow(QMainWindow):
 
             arg = dict()
             arg['offset'] = float(self.ui.lineEdit_phase_offset.text())
-            arg['vmax']   = float(self.ui.lineEdit_phase_max.text())
-            arg['vmin']   = float(self.ui.lineEdit_phase_min.text())
+            
+            if self.ui.checkBox_max.isChecked():
+                arg['vmax']   = float(self.ui.lineEdit_phase_max.text())
+
+            if self.ui.checkBox_min.isChecked():
+                arg['vmin']   = float(self.ui.lineEdit_phase_min.text())
 
             c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
             
