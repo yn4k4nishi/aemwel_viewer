@@ -139,8 +139,56 @@
 </dd></dl>
 
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline"></a></h2>
+<section id="module-plot">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-plot" title="Permalink to this headline"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.PlotForm">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.</span></span><span class="sig-name descname"><span class="pre">PlotForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.PlotForm" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>プロットの形式</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plot.PlotForm.cartesian2D">
+<span class="sig-name descname"><span class="pre">cartesian2D</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">1</span></em><a class="headerlink" href="#plot.PlotForm.cartesian2D" title="Permalink to this definition"></a></dt>
+<dd><p>2次元の直交座標</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plot.PlotForm.heatmap">
+<span class="sig-name descname"><span class="pre">heatmap</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">3</span></em><a class="headerlink" href="#plot.PlotForm.heatmap" title="Permalink to this definition"></a></dt>
+<dd><p>ヒートマップ</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="plot.PlotForm.polar">
+<span class="sig-name descname"><span class="pre">polar</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">2</span></em><a class="headerlink" href="#plot.PlotForm.polar" title="Permalink to this definition"></a></dt>
+<dd><p>2次元の極座標</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plot.load_data">
+<span class="sig-prename descclassname"><span class="pre">plot.</span></span><span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.load_data" title="Permalink to this definition"></a></dt>
+<dd><p>データの読み込み</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>file_name</strong> (<em>str</em>) -- データを読み込むファイル</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>Keyにデータ系列の名前を持ち, numpy.arrayとしてデータを持つ</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">load_data</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">])</span>
+<span class="go">[     0.      1.      2. ... 98. 99. 100.]</span>
+</pre></div>
+</div>
+</dd></dl>
+
 </section>
 </section>
 
