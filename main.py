@@ -121,7 +121,7 @@ class MainWindow(QMainWindow):
         self.ui.checkBox_min.clicked.connect(lambda : self.ui.lineEdit_phase_min.setDisabled(not self.ui.checkBox_min.isChecked()))
 
         self.ui.checkBox_ani.clicked.connect(lambda : self.ui.pushButton_openPhaseData.setEnabled(self.ui.checkBox_ani.isChecked()))
-        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.horizontalSlider_speed.setEnabled(self.ui.checkBox_ani.isChecked()))
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
         self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_ani_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
 
         self.ui.pushButton_openPhaseData.clicked.connect(self.loadPhaseData)
@@ -229,7 +229,7 @@ class MainWindow(QMainWindow):
             freq         = self.ui.comboBox_freq.currentText()
 
             nstep    = int(self.ui.lineEdit_ani_interval.text())
-            interval = self.ui.horizontalSlider_speed.value()
+            interval = int(self.ui.lineEdit_interval.text())
 
             arg = dict()
             arg['offset'] = float(self.ui.lineEdit_phase_offset.text())
