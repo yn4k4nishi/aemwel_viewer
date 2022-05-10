@@ -1,9 +1,11 @@
+from timeit import repeat
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.animation as ani
+from matplotlib import animation
+from pandas import Interval
 
 
-def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, **kwargs):
+def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, nstep, interval, **kwargs):
     """プロットのアニメーション
     
     Parameters
@@ -25,7 +27,7 @@ def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, **
 
     Returns
     -------
-    :obj:`matplotlib.collections.QuadMesh`
+    :obj:`matplotlib.image.AxesImage`
     """
 
     ## pickup axis
@@ -61,10 +63,19 @@ def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, **
     
     z = z_mg * np.sin(z_ph)
 
-    im = axes.imshow(z)
+    axes.imshow(z, cmap='jet')
+
+    ims = []
+    for theta in np.linspace(-np.pi, np.pi, nstep):
+        z = z_mg * np.sin(z_ph + theta)
+        im = axes.imshow(z, cmap='jet', animated=True)
+        ims.append([im])
+
+    ani = animation.ArtistAnimation(fig, ims, interval=interval, repeat_delay=0)
+
+    return ani
 
 
-    pass
 
 
 if __name__ == "__main__":
@@ -80,7 +91,7 @@ if __name__ == "__main__":
 
     fig, ax = plt.subplots()
 
-    animate(fig, ax, data_mag, data_phase, 'z', 0, freq)
+    ani = animate(fig, ax, data_mag, data_phase, 'z', 0, freq, nstep=20, interval=100)
 
     plt.show()
 
