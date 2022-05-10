@@ -224,6 +224,9 @@
                  </item>
                  <item row="2" column="2">
                   <widget class="QLineEdit" name="lineEdit_phase_max">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                      <horstretch>0</horstretch>
@@ -232,6 +235,9 @@
                    </property>
                    <property name="text">
                     <string>180</string>
+                   </property>
+                   <property name="frame">
+                    <bool>true</bool>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -250,6 +256,9 @@
                  </item>
                  <item row="3" column="2">
                   <widget class="QLineEdit" name="lineEdit_phase_min">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
                      <horstretch>0</horstretch>

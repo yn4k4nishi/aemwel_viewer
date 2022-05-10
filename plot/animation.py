@@ -1,8 +1,7 @@
-from timeit import repeat
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import animation
-from pandas import Interval
+from mpl_toolkits.axes_grid1 import axes_divider
 
 
 def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, nstep, interval, **kwargs):
@@ -69,6 +68,11 @@ def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, ns
 
     z = z_mg * np.sin(z_ph)
     im0 = axes.imshow(z, cmap='jet', **k)
+
+    ## color bar
+    divider = axes_divider.make_axes_locatable(axes)
+    cax = divider.append_axes("right", size="3%", pad="2%")
+    fig.colorbar(im0, cax=cax)
 
     ims = []
     for theta in np.linspace(-np.pi, np.pi, nstep, endpoint=False):
