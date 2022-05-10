@@ -61,14 +61,19 @@ def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, ns
         z_mg[i] = _z_mg[t]
         z_ph[i] = _z_ph[t] / 180 * np.pi
     
-    z = z_mg * np.sin(z_ph)
+    k = {}
+    if 'vmax' in kwargs:
+        k['vmax'] = kwargs['vmax']
+    if 'vmin' in kwargs:
+        k['vmin'] = kwargs['vmin']
 
-    im0 = axes.imshow(z, cmap='jet')
+    z = z_mg * np.sin(z_ph)
+    im0 = axes.imshow(z, cmap='jet', **k)
 
     ims = []
     for theta in np.linspace(-np.pi, np.pi, nstep, endpoint=False):
         z = z_mg * np.sin(z_ph + theta)
-        im = axes.imshow(z, cmap='jet', animated=True)
+        im = axes.imshow(z, cmap='jet', animated=True, **k)
         ims.append([im])
 
     ani = animation.ArtistAnimation(fig, ims, interval=interval, repeat_delay=0)

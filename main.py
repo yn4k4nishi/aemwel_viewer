@@ -128,6 +128,7 @@ class MainWindow(QMainWindow):
         self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_ani_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
 
         self.ui.pushButton_openPhaseData.clicked.connect(self.loadPhaseData)
+        self.ui.pushButton_saveGIF.clicked.connect(self.saveGIF)
 
         ## show this widget
         self.show()
@@ -255,9 +256,17 @@ class MainWindow(QMainWindow):
             
             else:
                 if len(self.data.keys()) == len(self.data_ph.keys()):
-                    self.ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data_ph, pickup_axis, pickup_value, freq, nstep, interval)
+                    self.ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data_ph, pickup_axis, pickup_value, freq, nstep, interval, **arg)
                 
         self.canvas.draw()
+
+    def saveGIF(self):
+        gif_file = QFileDialog.getSaveFileName(self, 'Save as GIF', '/home/animation.gif')[0]
+        
+        if not gif_file:
+            return
+
+        self.ani.save(gif_file, writer="imagemagick")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
