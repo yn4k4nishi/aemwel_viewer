@@ -370,6 +370,9 @@
                  </item>
                  <item row="0" column="1">
                   <widget class="QLineEdit" name="lineEdit_ani_interval">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
                    <property name="text">
                     <string>20</string>
                    </property>

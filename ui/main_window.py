@@ -219,6 +219,7 @@ class Ui_MainWindow(object):
         self.label_6.setObjectName("label_6")
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.label_6)
         self.lineEdit_ani_interval = QtWidgets.QLineEdit(self.groupBox_6)
+        self.lineEdit_ani_interval.setEnabled(False)
         self.lineEdit_ani_interval.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.lineEdit_ani_interval.setObjectName("lineEdit_ani_interval")
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_ani_interval)

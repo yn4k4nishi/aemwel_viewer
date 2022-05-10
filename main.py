@@ -119,6 +119,7 @@ class MainWindow(QMainWindow):
 
         self.ui.checkBox_ani.clicked.connect(lambda : self.ui.pushButton_openPhaseData.setEnabled(self.ui.checkBox_ani.isChecked()))
         self.ui.checkBox_ani.clicked.connect(lambda : self.ui.horizontalSlider_speed.setEnabled(self.ui.checkBox_ani.isChecked()))
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_ani_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
 
         ## show this widget
         self.show()
