@@ -60,6 +60,9 @@ class MainWindow(QMainWindow):
     data = {}
     """dict プロットに使うデータ"""
 
+    data_ph = {}
+    """dict アニメーションに使うデータ"""
+
 
     def __init__(self, parent=None):
         """初期化
@@ -120,6 +123,12 @@ class MainWindow(QMainWindow):
         self.ui.checkBox_max.clicked.connect(lambda : self.ui.lineEdit_phase_max.setDisabled(not self.ui.checkBox_max.isChecked()))
         self.ui.checkBox_min.clicked.connect(lambda : self.ui.lineEdit_phase_min.setDisabled(not self.ui.checkBox_min.isChecked()))
 
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.pushButton_openPhaseData.setEnabled(self.ui.checkBox_ani.isChecked()))
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_ani_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
+
+        self.ui.pushButton_openPhaseData.clicked.connect(self.loadPhaseData)
+
         ## show this widget
         self.show()
     
@@ -167,6 +176,22 @@ class MainWindow(QMainWindow):
             self.ui.comboBox_freq.addItem(k)
 
 
+    def loadPhaseData(self):
+        """位相データの読み込み
+        
+        アニメーション用の位相データの読み込み
+        """
+        filter = "All Files(*);;csv(*.csv);;Touch Stone(*.s*p)" 
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
+
+        if not file_name:
+            return
+
+        self.ui.label_phase_data_path.setText(file_name)
+
+        self.data_ph = plot.load_data(file_name)
+
+
     def addAxis(self):
         """プロットする軸(データ系列)の追加"""
         self.ui.listWidget_axes.addItem(self.ui.comboBox_add.currentText())
@@ -203,10 +228,13 @@ class MainWindow(QMainWindow):
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
 
-            plane = self.ui.comboBox_plane.currentText()
-            pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
+            plane        = self.ui.comboBox_plane.currentText()
+            pickup_axis  = 'xyz'.replace(plane[0], '').replace(plane[1], '')
             pickup_value = float(self.ui.comboBox_cutting.currentText())
-            freq = self.ui.comboBox_freq.currentText()
+            freq         = self.ui.comboBox_freq.currentText()
+
+            nstep    = int(self.ui.lineEdit_ani_interval.text())
+            interval = int(self.ui.lineEdit_interval.text())
 
             arg = dict()
             arg['offset'] = float(self.ui.lineEdit_phase_offset.text())
@@ -217,13 +245,18 @@ class MainWindow(QMainWindow):
             if self.ui.checkBox_min.isChecked():
                 arg['vmin']   = float(self.ui.lineEdit_phase_min.text())
 
-            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
+            if not self.ui.checkBox_ani.isChecked():
+                c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
+                
+                ## color bar
+                divider = axes_divider.make_axes_locatable(self.canvas.axes)
+                cax = divider.append_axes("right", size="3%", pad="2%")
+                self.canvas.fig.colorbar(c, cax=cax)
             
-            ## color bar
-            divider = axes_divider.make_axes_locatable(self.canvas.axes)
-            cax = divider.append_axes("right", size="3%", pad="2%")
-            self.canvas.fig.colorbar(c, cax=cax)
-
+            else:
+                if len(self.data.keys()) == len(self.data_ph.keys()):
+                    self.ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data_ph, pickup_axis, pickup_value, freq, nstep, interval)
+                
         self.canvas.draw()
 
 if __name__ == "__main__":
