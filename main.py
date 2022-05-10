@@ -184,6 +184,8 @@ class MainWindow(QMainWindow):
         if not file_name:
             return
 
+        self.ui.label_phase_data_path.setText(file_name)
+
         self.data_ph = plot.load_data(file_name)
 
 
@@ -250,7 +252,7 @@ class MainWindow(QMainWindow):
             
             else:
                 if len(self.data.keys()) == len(self.data_ph.keys()):
-                    ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data_ph, pickup_axis, pickup_value, freq, nstep, interval)
+                    self.ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data_ph, pickup_axis, pickup_value, freq, nstep, interval)
                 
         self.canvas.draw()
 

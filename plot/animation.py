@@ -63,12 +63,12 @@ def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, ns
     
     z = z_mg * np.sin(z_ph)
 
-    im0 = axes.imshow(z.T, cmap='jet')
+    im0 = axes.imshow(z, cmap='jet')
 
     ims = []
     for theta in np.linspace(-np.pi, np.pi, nstep, endpoint=False):
         z = z_mg * np.sin(z_ph + theta)
-        im = axes.imshow(z.T, cmap='jet', animated=True)
+        im = axes.imshow(z, cmap='jet', animated=True)
         ims.append([im])
 
     ani = animation.ArtistAnimation(fig, ims, interval=interval, repeat_delay=0)
@@ -76,7 +76,6 @@ def animate(fig, axes, data_mag, data_phase, pickup_axis, pickup_value, freq, ns
     axes.set_aspect('equal')
 
     return ani
-
 
 
 

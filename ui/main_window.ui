@@ -344,6 +344,19 @@
                 </widget>
                </item>
                <item>
+                <widget class="QLabel" name="label_phase_data_path">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+               <item>
                 <widget class="QPushButton" name="pushButton_openPhaseData">
                  <property name="enabled">
                   <bool>false</bool>
@@ -374,7 +387,7 @@
                     <bool>false</bool>
                    </property>
                    <property name="text">
-                    <string>20</string>
+                    <string>40</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
