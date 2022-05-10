@@ -4,6 +4,14 @@ plot package
 Submodules
 ----------
 
+plot.animation module
+---------------------
+
+.. automodule:: plot.animation
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 plot.cartesian2D module
 -----------------------
 
