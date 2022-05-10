@@ -117,6 +117,9 @@ class MainWindow(QMainWindow):
         self.ui.checkBox_max.clicked.connect(lambda : self.ui.lineEdit_phase_max.setDisabled(not self.ui.checkBox_max.isChecked()))
         self.ui.checkBox_min.clicked.connect(lambda : self.ui.lineEdit_phase_min.setDisabled(not self.ui.checkBox_min.isChecked()))
 
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.pushButton_openPhaseData.setEnabled(self.ui.checkBox_ani.isChecked()))
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.horizontalSlider_speed.setEnabled(self.ui.checkBox_ani.isChecked()))
+
         ## show this widget
         self.show()
     
