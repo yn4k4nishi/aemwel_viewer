@@ -218,12 +218,16 @@ class MainWindow(QMainWindow):
             if self.ui.checkBox_min.isChecked():
                 arg['vmin']   = float(self.ui.lineEdit_phase_min.text())
 
-            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
+            if not self.ui.checkBox_ani.isChecked():
+                c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
+                
+                ## color bar
+                divider = axes_divider.make_axes_locatable(self.canvas.axes)
+                cax = divider.append_axes("right", size="3%", pad="2%")
+                self.canvas.fig.colorbar(c, cax=cax)
             
-            ## color bar
-            divider = axes_divider.make_axes_locatable(self.canvas.axes)
-            cax = divider.append_axes("right", size="3%", pad="2%")
-            self.canvas.fig.colorbar(c, cax=cax)
+            # else:
+            #     animation.animate()
 
         self.canvas.draw()
 
