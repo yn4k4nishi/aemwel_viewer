@@ -57,6 +57,9 @@ class MainWindow(QMainWindow):
     data = {}
     """dict プロットに使うデータ"""
 
+    data_ph = {}
+    """dict アニメーションに使うデータ"""
+
 
     def __init__(self, parent=None):
         """初期化
@@ -121,6 +124,8 @@ class MainWindow(QMainWindow):
         self.ui.checkBox_ani.clicked.connect(lambda : self.ui.horizontalSlider_speed.setEnabled(self.ui.checkBox_ani.isChecked()))
         self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_ani_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
 
+        self.ui.pushButton_openPhaseData.clicked.connect(self.loadPhaseData)
+
         ## show this widget
         self.show()
     
@@ -168,6 +173,20 @@ class MainWindow(QMainWindow):
             self.ui.comboBox_freq.addItem(k)
 
 
+    def loadPhaseData(self):
+        """位相データの読み込み
+        
+        アニメーション用の位相データの読み込み
+        """
+        filter = "All Files(*);;csv(*.csv);;Touch Stone(*.s*p)" 
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
+
+        if not file_name:
+            return
+
+        self.data_ph = plot.load_data(file_name)
+
+
     def addAxis(self):
         """プロットする軸(データ系列)の追加"""
         self.ui.listWidget_axes.addItem(self.ui.comboBox_add.currentText())
@@ -204,10 +223,13 @@ class MainWindow(QMainWindow):
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
 
-            plane = self.ui.comboBox_plane.currentText()
-            pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
+            plane        = self.ui.comboBox_plane.currentText()
+            pickup_axis  = 'xyz'.replace(plane[0], '').replace(plane[1], '')
             pickup_value = float(self.ui.comboBox_cutting.currentText())
-            freq = self.ui.comboBox_freq.currentText()
+            freq         = self.ui.comboBox_freq.currentText()
+
+            nstep    = int(self.ui.lineEdit_ani_interval.text())
+            interval = self.ui.horizontalSlider_speed.value()
 
             arg = dict()
             arg['offset'] = float(self.ui.lineEdit_phase_offset.text())
@@ -226,9 +248,10 @@ class MainWindow(QMainWindow):
                 cax = divider.append_axes("right", size="3%", pad="2%")
                 self.canvas.fig.colorbar(c, cax=cax)
             
-            # else:
-            #     animation.animate()
-
+            else:
+                if len(self.data.keys()) == len(self.data_ph.keys()):
+                    ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data_ph, pickup_axis, pickup_value, freq, nstep, interval)
+                
         self.canvas.draw()
 
 if __name__ == "__main__":

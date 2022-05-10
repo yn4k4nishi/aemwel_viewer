@@ -364,7 +364,7 @@
                  <item row="0" column="0">
                   <widget class="QLabel" name="label_6">
                    <property name="text">
-                    <string>step [deg]</string>
+                    <string>step num</string>
                    </property>
                   </widget>
                  </item>
@@ -384,7 +384,7 @@
                  <item row="1" column="0">
                   <widget class="QLabel" name="label_5">
                    <property name="text">
-                    <string>interval</string>
+                    <string>interval [ms]</string>
                    </property>
                   </widget>
                  </item>
@@ -394,13 +394,22 @@
                     <bool>false</bool>
                    </property>
                    <property name="minimum">
-                    <number>1</number>
-                   </property>
-                   <property name="maximum">
                     <number>100</number>
                    </property>
-                   <property name="sliderPosition">
+                   <property name="maximum">
+                    <number>300</number>
+                   </property>
+                   <property name="singleStep">
+                    <number>10</number>
+                   </property>
+                   <property name="pageStep">
                     <number>50</number>
+                   </property>
+                   <property name="value">
+                    <number>200</number>
+                   </property>
+                   <property name="sliderPosition">
+                    <number>200</number>
                    </property>
                    <property name="orientation">
                     <enum>Qt::Horizontal</enum>

@@ -1,7 +1,7 @@
-# from plot import cartesian2D
-# from plot import heatmap
-# from plot import polar
-# from plot import animation
+from plot import cartesian2D
+from plot import heatmap
+from plot import polar
+from plot import animation
 
 from enum import Enum
 
