@@ -1,3 +1,6 @@
+from matplotlib.pyplot import axis
+import numpy as np
+
 
 def plot(axes, data, x_axis, y_axes):
     """2次元直交座標のプロット
@@ -16,5 +19,10 @@ def plot(axes, data, x_axis, y_axes):
     
     axes.set_xlabel(x_axis)
 
+    xmin = min(data[x_axis])
+    xmax = max(data[x_axis])
+
+    axes.set_xlim([xmin, xmax])
+
     for y_axis in y_axes:
-        axes.plot(data[x_axis], data[y_axis], label=y_axis)
+        axes.plot(data[x_axis], data[y_axis], label=y_axis, linewidth=3)
