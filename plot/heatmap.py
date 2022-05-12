@@ -1,7 +1,10 @@
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib import animation
+from mpl_toolkits.axes_grid1 import axes_divider
             
 
-def plot(axes, data, pickup_axis, pickup_value, freq, **kwargs):
+def plot(fig, axes, data, pickup_axis, pickup_value, freq, **kwargs):
     """ヒートマップのプロット
     
     Parameters
@@ -54,20 +57,23 @@ def plot(axes, data, pickup_axis, pickup_value, freq, **kwargs):
         z += kwargs['offset']
         z = (z + 180) % 360 - 180 
 
-    z_max = np.max(z)
-    z_min = np.min(z)
-
+    k = {}
     if 'vmax' in kwargs:
-        z_max = kwargs['vmax']
-    
+        k['vmax'] = kwargs['vmax']
     if 'vmin' in kwargs:
-        z_min = kwargs['vmin']
+        k['vmin'] = kwargs['vmin']
 
-    heatmap = axes.pcolormesh( x, y,  z.T, cmap='jet', shading='nearest', vmin=z_min, vmax=z_max, clip_on=True, label='heatmap')
-    
+
+    im = axes.imshow(z, cmap='jet', **k)
+
+    ## color bar
+    divider = axes_divider.make_axes_locatable(axes)
+    cax = divider.append_axes("right", size="3%", pad="2%")
+    fig.colorbar(im, cax=cax)
+
     axes.set_aspect('equal')
 
-    return heatmap
+    return im
 
 if __name__ == "__main__":
     pass
