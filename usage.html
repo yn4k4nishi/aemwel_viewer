@@ -45,8 +45,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Usage</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#s">Sパラメータ(直交座標)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#id1">放射パターン</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">電磁界分布</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#id3">電磁界分布アニメーション(開発途中)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">分散曲線</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">電磁界分布</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="development.html">Development</a></li>
@@ -98,13 +98,29 @@
 <section id="id1">
 <h2>放射パターン<a class="headerlink" href="#id1" title="Permalink to this headline"></a></h2>
 <p>左上の<code class="docutils literal notranslate"><span class="pre">Format</span></code>で<code class="docutils literal notranslate"><span class="pre">Polar</span></code>を選択する。
-あとは<span class="xref myst">sパラメータ(直交座標)</span>と同様</p>
+あとはSパラメータ(直交座標)と同様</p>
 </section>
 <section id="id2">
-<h2>電磁界分布<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<h2>分散曲線<a class="headerlink" href="#id2" title="Permalink to this headline"></a></h2>
+<p>左上の<code class="docutils literal notranslate"><span class="pre">File</span></code>から回路全体のtouch stoneファイルを読み込む。</p>
+<p><img alt="" src="_images/dispersion.png" /></p>
+<p><code class="docutils literal notranslate"><span class="pre">dispersion</span></code>タブを開き<code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">Port</span> <span class="pre">Data</span></code>をクリックしポートのみのtouch stoneファイルを開く</p>
+<p>単位セル数, ~~ 単位セル長さ ~~ , 位相の不定性の補正m (整数), プロットの範囲を設定する。</p>
 </section>
 <section id="id3">
-<h2>電磁界分布アニメーション(開発途中)<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<h2>電磁界分布<a class="headerlink" href="#id3" title="Permalink to this headline"></a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">Format</span></code> &gt; <code class="docutils literal notranslate"><span class="pre">Heatmap</span></code> を選択し、<code class="docutils literal notranslate"><span class="pre">3D</span></code>タブを開く。</p>
+<p><img alt="" src="_images/heatmap.png" /></p>
+<p>3次元データを表示するため、どの軸で断面図を生成するか選択する必要がある。
+<code class="docutils literal notranslate"><span class="pre">cutting</span> <span class="pre">plane</span></code> が <code class="docutils literal notranslate"><span class="pre">xy</span></code>で<code class="docutils literal notranslate"><span class="pre">coordinate</span></code>が 0 の時は z=0の断面図を表示する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Freq</span></code>で周波数を選択する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Offset</span></code>,<code class="docutils literal notranslate"><span class="pre">Max</span></code>,<code class="docutils literal notranslate"><span class="pre">Min</span></code>はオフセット(すべての値に足される),最大値,最小値である。
+後述のアニメーションを使う場合は、<code class="docutils literal notranslate"><span class="pre">Max</span></code>と<code class="docutils literal notranslate"><span class="pre">Min</span></code>を設定しないと各画像でカラースケールが異なるため、滑らかに再生することができないので注意。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Animation</span></code>の<code class="docutils literal notranslate"><span class="pre">enable</span></code>にチェックマークを付けると、アニメーションで表示することができる。</p>
+<p>アニメーションを使うときは左上からLinearMagnitudeのデータを読み込み、
+<code class="docutils literal notranslate"><span class="pre">Open</span> <span class="pre">Phase</span> <span class="pre">Data</span></code>から位相(degree)のデータを読み込む。</p>
+<p><code class="docutils literal notranslate"><span class="pre">step</span> <span class="pre">num</span></code>で360を何等分するかを、<code class="docutils literal notranslate"><span class="pre">interval[ms]</span></code>でGIFの画像の時間間隔を設定する。</p>
+<p><code class="docutils literal notranslate"><span class="pre">Save</span> <span class="pre">as</span> <span class="pre">GIF</span></code>で表示しているアニメーションをGIF形式で保存することができる。</p>
 </section>
 </section>
 

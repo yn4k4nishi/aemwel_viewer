@@ -20,6 +20,14 @@ plot.cartesian2D module
    :undoc-members:
    :show-inheritance:
 
+plot.dispersion module
+----------------------
+
+.. automodule:: plot.dispersion
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 plot.heatmap module
 -------------------
 
