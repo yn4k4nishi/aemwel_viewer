@@ -258,6 +258,7 @@ class Ui_MainWindow(object):
         self.pushButton_openPortData.setObjectName("pushButton_openPortData")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.pushButton_openPortData)
         self.label_portData = QtWidgets.QLabel(self.tab_3)
+        self.label_portData.setWordWrap(True)
         self.label_portData.setObjectName("label_portData")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.label_portData)
         self.label_8 = QtWidgets.QLabel(self.tab_3)
