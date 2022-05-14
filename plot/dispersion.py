@@ -5,7 +5,7 @@ from telnetlib import TM
 from turtle import color
 
 
-def plot(axes, data, data_port, ncell, lcell, m):
+def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
     """分散曲線のプロット
 
     Parameters
@@ -24,8 +24,14 @@ def plot(axes, data, data_port, ncell, lcell, m):
         角度の不定性(2 pi m)を補正するための変数
     """
 
-    axes.set_xlim([-0.5, 0.5])
     axes.set_xlabel(r'$\Delta \beta / \pi$')
+    axes.set_ylabel('Frequency [GHz]')
+    axes.set_xlim([-0.5, 0.5])
+
+    if 'xmax' in kwargs:
+        axes.set_xlim([kwargs['xmin'], kwargs['xmax']])
+    if 'ymax' in kwargs:
+        axes.set_ylim([kwargs['ymin'], kwargs['ymax']])
 
     freq = data['freq_GHz']
 
