@@ -236,9 +236,10 @@ class MainWindow(QMainWindow):
 
             if self.ui.tabWidget.currentIndex() == 2:
                 ncell = int(self.ui.lineEdit_ncell.text())
+                lcell = float(self.ui.lineEdit_cell_len.text())
                 m     = int(self.ui.lineEdit_m.text())
 
-                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, m)
+                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, lcell, m)
 
             self.canvas.fig.legend()
 
