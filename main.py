@@ -239,7 +239,15 @@ class MainWindow(QMainWindow):
                 lcell = float(self.ui.lineEdit_cell_len.text())
                 m     = int(self.ui.lineEdit_m.text())
 
-                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, lcell, m)
+                arg = {}
+                if self.ui.checkBox_xlim.isChecked():
+                    arg['xmax'] = float(self.ui.lineEdit_xmax.text())
+                    arg['xmin'] = float(self.ui.lineEdit_xmin.text())
+                if self.ui.checkBox_ylim.isChecked():
+                    arg['ymax'] = float(self.ui.lineEdit_ymax.text())
+                    arg['ymin'] = float(self.ui.lineEdit_ymin.text())
+
+                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, lcell, m, **arg)
 
             self.canvas.fig.legend()
 
