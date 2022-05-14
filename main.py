@@ -102,7 +102,6 @@ class MainWindow(QMainWindow):
         
         self.ui.actionCar2D.setChecked(True)
 
-
         ## connect ui and function
         self.ui.pushButton_apply.clicked.connect(self.update)
         self.ui.pushButton_clear.clicked.connect(self.ui.listWidget_axes.clear)
@@ -131,6 +130,8 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_saveGIF.clicked.connect(self.saveGIF)
 
         self.ui.pushButton_openPortData.clicked.connect(self.loadPortData)
+
+        self.ui.actionOpen_in_Browser.triggered.connect(self.help)
 
         ## show this widget
         self.show()
@@ -195,6 +196,10 @@ class MainWindow(QMainWindow):
         self.data2 = plot.load_data(file_name)
     
     def loadPortData(self):
+        """ポートのデータの読み込み
+
+        分散曲線のため、ポート成分のみのデータを読み込む
+        """
         filter = "Touch Stone(*.s*p)" 
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
 
@@ -286,12 +291,18 @@ class MainWindow(QMainWindow):
         self.canvas.draw()
 
     def saveGIF(self):
+        """アニメーションをGIF形式で保存"""
         gif_file = QFileDialog.getSaveFileName(self, 'Save as GIF', '/home/animation.gif')[0]
         
         if not gif_file:
             return
 
         self.ani.save(gif_file, writer="imagemagick")
+
+    def help(self):
+        """ブラウザでドキュメントを表示"""
+        url = QUrl("https://yn4k4nishi.github.io/aemwel_viewer/")
+        QDesktopServices.openUrl(url)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
