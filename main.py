@@ -60,8 +60,8 @@ class MainWindow(QMainWindow):
     data = {}
     """dict プロットに使うデータ"""
 
-    data_ph = {}
-    """dict アニメーションに使うデータ"""
+    data2 = {}
+    """dict アニメーション等に使うデータ"""
 
 
     def __init__(self, parent=None):
@@ -130,6 +130,8 @@ class MainWindow(QMainWindow):
         self.ui.pushButton_openPhaseData.clicked.connect(self.loadPhaseData)
         self.ui.pushButton_saveGIF.clicked.connect(self.saveGIF)
 
+        self.ui.pushButton_openPortData.clicked.connect(self.loadPortData)
+
         ## show this widget
         self.show()
     
@@ -190,7 +192,18 @@ class MainWindow(QMainWindow):
 
         self.ui.label_phase_data_path.setText(file_name)
 
-        self.data_ph = plot.load_data(file_name)
+        self.data2 = plot.load_data(file_name)
+    
+    def loadPortData(self):
+        filter = "Touch Stone(*.s*p)" 
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
+
+        if not file_name:
+            return
+        
+        self.ui.label_portData.setText(file_name)
+
+        self.data2 = plot.load_data(file_name)
 
 
     def addAxis(self):
@@ -218,7 +231,15 @@ class MainWindow(QMainWindow):
         
         if self.form == PlotForm.cartesian2D:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
-            cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes)
+            if self.ui.tabWidget.currentIndex() == 0:
+                cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes)
+
+            if self.ui.tabWidget.currentIndex() == 2:
+                ncell = int(self.ui.lineEdit_ncell.text())
+                m     = int(self.ui.lineEdit_m.text())
+
+                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, m)
+
             self.canvas.fig.legend()
 
         if self.form == PlotForm.polar:
@@ -250,9 +271,9 @@ class MainWindow(QMainWindow):
                 c = heatmap.plot(self.canvas.fig, self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
             
             else:
-                if len(self.data.keys()) == len(self.data_ph.keys()):
-                    self.ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data_ph, pickup_axis, pickup_value, freq, nstep, interval, **arg)
-                
+                if len(self.data.keys()) == len(self.data2.keys()):
+                    self.ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data2, pickup_axis, pickup_value, freq, nstep, interval, **arg)
+
         self.canvas.draw()
 
     def saveGIF(self):

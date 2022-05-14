@@ -2,6 +2,7 @@ from plot import cartesian2D
 from plot import heatmap
 from plot import polar
 from plot import animation
+from plot import dispersion
 
 from enum import Enum
 
@@ -77,6 +78,6 @@ def load_data(file_name):
                 data[key] = net.s_db[:, i, j]
 
                 key = 'S{}{}_deg'.format(i+1, j+1)
-                data[key] = net.s_deg[:, i, j]
+                data[key] = net.s_deg_unwrap[:, i, j]
 
         return data
