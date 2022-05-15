@@ -237,7 +237,12 @@ class MainWindow(QMainWindow):
         if self.form == PlotForm.cartesian2D:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
             if self.ui.tabWidget.currentIndex() == 0:
-                cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes)
+                arg = {}
+                if self.ui.checkBox_lim.isChecked():
+                    arg['ymax'] = float(self.ui.lineEdit_ymax_2.text())
+                    arg['ymin'] = float(self.ui.lineEdit_ymin_2.text())
+
+                cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes, **arg)
 
             if self.ui.tabWidget.currentIndex() == 2:
                 ncell = int(self.ui.lineEdit_ncell.text())
@@ -258,8 +263,14 @@ class MainWindow(QMainWindow):
 
         if self.form == PlotForm.polar:
             self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
-            polar.plot(self.canvas.axes, self.data, x_axis, y_axes)
-            self.canvas.fig.legend()
+
+            arg = {}
+            if self.ui.checkBox_lim.isChecked():
+                arg['ymax'] = float(self.ui.lineEdit_ymax_2.text())
+                arg['ymin'] = float(self.ui.lineEdit_ymin_2.text())
+
+            polar.plot(self.canvas.axes, self.data, x_axis, y_axes, **arg)
+            self.canvas.fig.legend(bbox_to_anchor=(1, 0), loc='lower right')
 
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
