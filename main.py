@@ -261,7 +261,7 @@ class MainWindow(QMainWindow):
 
                 dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, lcell, m, **arg)
 
-            self.canvas.fig.legend()
+            # self.canvas.fig.legend()
 
         if self.form == PlotForm.polar:
             self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
@@ -272,7 +272,7 @@ class MainWindow(QMainWindow):
                 arg['ymin'] = float(self.ui.lineEdit_ymin_2.text())
 
             polar.plot(self.canvas.axes, self.data, x_axis, y_axes, **arg)
-            self.canvas.fig.legend(bbox_to_anchor=(1, 0), loc='lower right')
+            # self.canvas.fig.legend(bbox_to_anchor=(1, 0), loc='lower right')
 
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)

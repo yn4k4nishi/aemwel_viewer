@@ -61,8 +61,8 @@ def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
     ip = 0
     im = 0
 
-    axes.plot(data_p[0][0], freq[0], label=r'$\beta_p$', color='blue')
-    axes.plot(data_m[0][0], freq[0], label=r'$\beta_m$', color='red')
+    axes.plot(data_p[0][0], freq[0], label=r'$\beta_p$', color='blue', lw=3)
+    axes.plot(data_m[0][0], freq[0], label=r'$\beta_m$', color='red' , lw=3)
 
     for bp, bm in zip(data_p, data_m):
         axes.plot(bp, freq[ip:ip+len(bp)], color='blue', lw=3)
