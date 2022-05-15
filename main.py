@@ -317,5 +317,6 @@ class MainWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon('docs/img/icon32x32.png'))
     w = MainWindow()
     app.exec_()
