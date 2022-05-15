@@ -35,8 +35,8 @@ def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
 
     freq = data['freq_GHz']
 
-    beta_p =  (data['S12_deg'] - data_port['S12_deg']) / 180 / ncell + m / ncell
-    beta_m = -(data['S21_deg'] - data_port['S21_deg']) / 180 / ncell - m / ncell
+    beta_p = -(data['S21_deg'] - data_port['S21_deg']) / 180 / ncell - m / ncell
+    beta_m =  (data['S12_deg'] - data_port['S12_deg']) / 180 / ncell + m / ncell
 
     beta_d = (beta_p + beta_m)/2
 
@@ -47,14 +47,14 @@ def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
     tp = 0
     tm = 0
     for i in range(len(beta_p)):
-        data_p[tp].append(beta_p[i] + tp)
-        data_m[tm].append(beta_m[i] - tm)
+        data_p[tp].append(beta_p[i] - tp)
+        data_m[tm].append(beta_m[i] + tm)
 
-        if abs(beta_p[i] + tp) > 0.5:
+        if abs(beta_p[i] - tp) > 0.5:
             data_p.append([])
             tp += 1
 
-        if abs(beta_m[i] - tm) > 0.5:
+        if abs(beta_m[i] + tm) > 0.5:
             data_m.append([])
             tm += 1
 
@@ -65,10 +65,10 @@ def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
     axes.plot(data_m[0][0], freq[0], label=r'$\beta_m$', color='red')
 
     for bp, bm in zip(data_p, data_m):
-        axes.plot(bp, freq[ip:ip+len(bp)], color='blue')
-        axes.plot(bm, freq[im:im+len(bm)], color='red')
+        axes.plot(bp, freq[ip:ip+len(bp)], color='blue', lw=3)
+        axes.plot(bm, freq[im:im+len(bm)], color='red' , lw=3)
 
         ip += len(bp)
         im += len(bm)
 
-    axes.plot(beta_d, freq, label=r'$\Delta\beta$', color='black')
+    axes.plot(beta_d, freq, label=r'$\Delta\beta$', color='black', lw=3)

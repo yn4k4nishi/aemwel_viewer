@@ -50,6 +50,8 @@ class MplCanvas(FigureCanvasQTAgg):
         self.axes.set_aspect('equal')
         self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
+        matplotlib.rcParams["font.size"] = 18
+
 
 class MainWindow(QMainWindow):
     """Qt メインウィンドウ"""
