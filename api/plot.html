@@ -106,7 +106,7 @@
 <span id="plot-cartesian2d-module"></span><h2>plot.cartesian2D module<a class="headerlink" href="#module-plot.cartesian2D" title="Permalink to this headline"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="plot.cartesian2D.plot">
-<span class="sig-prename descclassname"><span class="pre">plot.cartesian2D.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.cartesian2D.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">plot.cartesian2D.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_axes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.cartesian2D.plot" title="Permalink to this definition"></a></dt>
 <dd><p>2次元直交座標のプロット</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -115,6 +115,8 @@
 <li><p><strong>data</strong> (<em>dict</em>) -- ファイルから読み込んだデータ</p></li>
 <li><p><strong>x_axis</strong> (<em>str</em>) -- x軸に使用するデータ系列名</p></li>
 <li><p><strong>y_axes</strong> (<em>list of str</em>) -- y軸に使用するデータ系列名のリスト</p></li>
+<li><p><strong>ymin</strong> (<em>float</em><em> (</em><em>option</em><em>)</em>) -- y軸の最小値</p></li>
+<li><p><strong>ymax</strong> (<em>float</em><em> (</em><em>option</em><em>)</em>) -- y軸の最大値</p></li>
 </ul>
 </dd>
 </dl>
@@ -170,7 +172,7 @@
 <span id="plot-polar-module"></span><h2>plot.polar module<a class="headerlink" href="#module-plot.polar" title="Permalink to this headline"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="plot.polar.plot">
-<span class="sig-prename descclassname"><span class="pre">plot.polar.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_axes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.polar.plot" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">plot.polar.</span></span><span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_axes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.polar.plot" title="Permalink to this definition"></a></dt>
 <dd><p>極座標プロット</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -179,6 +181,8 @@
 <li><p><strong>data</strong> (<em>dict</em>) -- ファイルから読み込んだデータ</p></li>
 <li><p><strong>x_axis</strong> (<em>str</em>) -- x軸のデータ系列名</p></li>
 <li><p><strong>y_axes</strong> (<em>str</em>) -- y軸のデータ系列名</p></li>
+<li><p><strong>ymin</strong> (<em>float</em><em> (</em><em>option</em><em>)</em>) -- y軸の最小値</p></li>
+<li><p><strong>ymax</strong> (<em>float</em><em> (</em><em>option</em><em>)</em>) -- y軸の最大値</p></li>
 </ul>
 </dd>
 </dl>
