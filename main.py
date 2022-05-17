@@ -1,7 +1,7 @@
 """Main Module
 
 """
-
+import os
 import sys
 import matplotlib
 try:
@@ -317,8 +317,16 @@ class MainWindow(QMainWindow):
         url = QUrl("https://yn4k4nishi.github.io/aemwel_viewer/")
         QDesktopServices.openUrl(url)
 
+
+def icon_path():
+    relative = 'docs/img/icon32x32.png'
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(os.path.abspath('.'), relative)
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setWindowIcon(QIcon('docs/img/icon32x32.png'))
+    app.setWindowIcon(QIcon(icon_path()))
     w = MainWindow()
     app.exec_()
