@@ -249,7 +249,8 @@ class MainWindow(QMainWindow):
             if self.ui.tabWidget.currentIndex() == 2:
                 ncell = int(self.ui.lineEdit_ncell.text())
                 lcell = float(self.ui.lineEdit_cell_len.text())
-                m     = int(self.ui.lineEdit_m.text())
+                m1    = int(self.ui.lineEdit_m1.text())
+                m2    = int(self.ui.lineEdit_m2.text())
 
                 arg = {}
                 if self.ui.checkBox_xlim.isChecked():
@@ -259,9 +260,9 @@ class MainWindow(QMainWindow):
                     arg['ymax'] = float(self.ui.lineEdit_ymax.text())
                     arg['ymin'] = float(self.ui.lineEdit_ymin.text())
 
-                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, lcell, m, **arg)
+                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, lcell, m1, m2, **arg)
 
-            self.canvas.fig.legend()
+            # self.canvas.fig.legend()
 
         if self.form == PlotForm.polar:
             self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')

@@ -5,7 +5,7 @@ from telnetlib import TM
 from turtle import color
 
 
-def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
+def plot(axes, data, data_port, ncell, lcell, m1, m2, **kwargs):
     """分散曲線のプロット
 
     Parameters
@@ -35,8 +35,8 @@ def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
 
     freq = data['freq_GHz']
 
-    beta_p = -(data['S21_deg'] - data_port['S21_deg']) / 180 / ncell - m / ncell
-    beta_m =  (data['S12_deg'] - data_port['S12_deg']) / 180 / ncell + m / ncell
+    beta_p = -(data['S21_deg'] - data_port['S21_deg']) / 180 / ncell - m1 / ncell
+    beta_m =  (data['S12_deg'] - data_port['S12_deg']) / 180 / ncell + m2 / ncell
 
     beta_d = (beta_p + beta_m)/2
 
@@ -61,8 +61,8 @@ def plot(axes, data, data_port, ncell, lcell, m, **kwargs):
     ip = 0
     im = 0
 
-    axes.plot(data_p[0][0], freq[0], label=r'$\beta_p$', color='blue')
-    axes.plot(data_m[0][0], freq[0], label=r'$\beta_m$', color='red')
+    axes.plot(data_p[0][0], freq[0], label=r'$\beta_p$', color='blue', lw=3)
+    axes.plot(data_m[0][0], freq[0], label=r'$\beta_m$', color='red' , lw=3)
 
     for bp, bm in zip(data_p, data_m):
         axes.plot(bp, freq[ip:ip+len(bp)], color='blue', lw=3)
