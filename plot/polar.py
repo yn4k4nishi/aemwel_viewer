@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def plot(axes, data, x_axis, y_axes):
+def plot(axes, data, x_axis, y_axes, **kwargs):
     """極座標プロット
     
     Parameters
@@ -14,6 +14,10 @@ def plot(axes, data, x_axis, y_axes):
         x軸のデータ系列名
     y_axes : str
         y軸のデータ系列名
+    ymin   : float (option)
+        y軸の最小値
+    ymax   : float (option)
+        y軸の最大値
     """
     
     angle = data[x_axis] / 180 * np.pi
@@ -28,3 +32,6 @@ def plot(axes, data, x_axis, y_axes):
     axes.set_rlabel_position(0)
     axes.set_xticks(np.pi/180. * np.linspace(0,  360, 12, endpoint=False))
     axes.spines['polar'].set_color('darkgray')
+
+    if 'ymax' in kwargs:
+        axes.set_ylim([kwargs['ymin'], kwargs['ymax']])

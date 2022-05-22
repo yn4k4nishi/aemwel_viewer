@@ -1,10 +1,13 @@
 """Main Module
 
 """
-
+import os
 import sys
 import matplotlib
-matplotlib.use('Qt5Agg')
+try:
+    matplotlib.use('Qt5Agg')
+except:
+    pass
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -47,6 +50,8 @@ class MplCanvas(FigureCanvasQTAgg):
         self.axes.set_aspect('equal')
         self.setSizePolicy(QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding))
 
+        matplotlib.rcParams["font.size"] = 18
+
 
 class MainWindow(QMainWindow):
     """Qt メインウィンドウ"""
@@ -56,6 +61,9 @@ class MainWindow(QMainWindow):
 
     data = {}
     """dict プロットに使うデータ"""
+
+    data2 = {}
+    """dict アニメーション等に使うデータ"""
 
 
     def __init__(self, parent=None):
@@ -96,7 +104,6 @@ class MainWindow(QMainWindow):
         
         self.ui.actionCar2D.setChecked(True)
 
-
         ## connect ui and function
         self.ui.pushButton_apply.clicked.connect(self.update)
         self.ui.pushButton_clear.clicked.connect(self.ui.listWidget_axes.clear)
@@ -113,6 +120,20 @@ class MainWindow(QMainWindow):
 
         self.ui.pushButton_addAxis.clicked.connect(self.addAxis)
         self.ui.comboBox_plane.activated.connect(self.set3dProperty)
+
+        self.ui.checkBox_max.clicked.connect(lambda : self.ui.lineEdit_phase_max.setDisabled(not self.ui.checkBox_max.isChecked()))
+        self.ui.checkBox_min.clicked.connect(lambda : self.ui.lineEdit_phase_min.setDisabled(not self.ui.checkBox_min.isChecked()))
+
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.pushButton_openPhaseData.setEnabled(self.ui.checkBox_ani.isChecked()))
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
+        self.ui.checkBox_ani.clicked.connect(lambda : self.ui.lineEdit_ani_interval.setEnabled(self.ui.checkBox_ani.isChecked()))
+
+        self.ui.pushButton_openPhaseData.clicked.connect(self.loadPhaseData)
+        self.ui.pushButton_saveGIF.clicked.connect(self.saveGIF)
+
+        self.ui.pushButton_openPortData.clicked.connect(self.loadPortData)
+
+        self.ui.actionOpen_in_Browser.triggered.connect(self.help)
 
         ## show this widget
         self.show()
@@ -134,11 +155,13 @@ class MainWindow(QMainWindow):
         ファイルダイアログを開き読み込むファイルを指定する
         読み込んだファイルを元にComboBoxを設定する
         """
-        filter = "csv(*.csv);;Touch Stone(*.s*p);;All Files(*)" 
+        filter = "All Files(*);;csv(*.csv);;Touch Stone(*.s*p)" 
         file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
 
         if not file_name:
             return
+        
+        self.ui.label_path.setText(file_name)
 
         self.data = plot.load_data(file_name)
 
@@ -157,6 +180,37 @@ class MainWindow(QMainWindow):
 
             self.ui.comboBox_add.addItem(k)
             self.ui.comboBox_freq.addItem(k)
+
+
+    def loadPhaseData(self):
+        """位相データの読み込み
+        
+        アニメーション用の位相データの読み込み
+        """
+        filter = "All Files(*);;csv(*.csv);;Touch Stone(*.s*p)" 
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
+
+        if not file_name:
+            return
+
+        self.ui.label_phase_data_path.setText(file_name)
+
+        self.data2 = plot.load_data(file_name)
+    
+    def loadPortData(self):
+        """ポートのデータの読み込み
+
+        分散曲線のため、ポート成分のみのデータを読み込む
+        """
+        filter = "Touch Stone(*.s*p)" 
+        file_name = QFileDialog.getOpenFileName(self, 'Open File', '/home', filter=filter)[0]
+
+        if not file_name:
+            return
+        
+        self.ui.label_portData.setText(file_name)
+
+        self.data2 = plot.load_data(file_name)
 
 
     def addAxis(self):
@@ -184,33 +238,95 @@ class MainWindow(QMainWindow):
         
         if self.form == PlotForm.cartesian2D:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
-            cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes)
+            if self.ui.tabWidget.currentIndex() == 0:
+                arg = {}
+                if self.ui.checkBox_lim.isChecked():
+                    arg['ymax'] = float(self.ui.lineEdit_ymax_2.text())
+                    arg['ymin'] = float(self.ui.lineEdit_ymin_2.text())
+
+                cartesian2D.plot(self.canvas.axes, self.data, x_axis, y_axes, **arg)
+
+            if self.ui.tabWidget.currentIndex() == 2:
+                ncell = int(self.ui.lineEdit_ncell.text())
+                lcell = float(self.ui.lineEdit_cell_len.text())
+                m     = int(self.ui.lineEdit_m.text())
+
+                arg = {}
+                if self.ui.checkBox_xlim.isChecked():
+                    arg['xmax'] = float(self.ui.lineEdit_xmax.text())
+                    arg['xmin'] = float(self.ui.lineEdit_xmin.text())
+                if self.ui.checkBox_ylim.isChecked():
+                    arg['ymax'] = float(self.ui.lineEdit_ymax.text())
+                    arg['ymin'] = float(self.ui.lineEdit_ymin.text())
+
+                dispersion.plot(self.canvas.axes, self.data, self.data2, ncell, lcell, m, **arg)
+
+            # self.canvas.fig.legend()
 
         if self.form == PlotForm.polar:
             self.canvas.axes = self.canvas.fig.add_subplot(111, projection='polar')
-            polar.plot(self.canvas.axes, self.data, x_axis, y_axes)
+
+            arg = {}
+            if self.ui.checkBox_lim.isChecked():
+                arg['ymax'] = float(self.ui.lineEdit_ymax_2.text())
+                arg['ymin'] = float(self.ui.lineEdit_ymin_2.text())
+
+            polar.plot(self.canvas.axes, self.data, x_axis, y_axes, **arg)
+            # self.canvas.fig.legend(bbox_to_anchor=(1, 0), loc='lower right')
 
         if self.form == PlotForm.heatmap:
             self.canvas.axes = self.canvas.fig.add_subplot(111)
 
-            plane = self.ui.comboBox_plane.currentText()
-            pickup_axis = 'xyz'.replace(plane[0], '').replace(plane[1], '')
+            plane        = self.ui.comboBox_plane.currentText()
+            pickup_axis  = 'xyz'.replace(plane[0], '').replace(plane[1], '')
             pickup_value = float(self.ui.comboBox_cutting.currentText())
-            freq = self.ui.comboBox_freq.currentText()
-            offset = float(self.ui.lineEdit_offset.text())
+            freq         = self.ui.comboBox_freq.currentText()
 
-            c = heatmap.plot(self.canvas.axes, self.data, pickup_axis, pickup_value, freq, offset)
+            nstep    = int(self.ui.lineEdit_ani_interval.text())
+            interval = int(self.ui.lineEdit_interval.text())
+
+            arg = dict()
+            arg['offset'] = float(self.ui.lineEdit_phase_offset.text())
             
-            ## color bar
-            divider = axes_divider.make_axes_locatable(self.canvas.axes)
-            cax = divider.append_axes("right", size="3%", pad="2%")
-            self.canvas.fig.colorbar(c, cax=cax)
+            if self.ui.checkBox_max.isChecked():
+                arg['vmax']   = float(self.ui.lineEdit_phase_max.text())
 
-        self.canvas.fig.legend()
+            if self.ui.checkBox_min.isChecked():
+                arg['vmin']   = float(self.ui.lineEdit_phase_min.text())
+
+            if not self.ui.checkBox_ani.isChecked():
+                c = heatmap.plot(self.canvas.fig, self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
+            
+            else:
+                if len(self.data.keys()) == len(self.data2.keys()):
+                    self.ani = animation.animate(self.canvas.fig, self.canvas.axes, self.data, self.data2, pickup_axis, pickup_value, freq, nstep, interval, **arg)
 
         self.canvas.draw()
 
+    def saveGIF(self):
+        """アニメーションをGIF形式で保存"""
+        gif_file = QFileDialog.getSaveFileName(self, 'Save as GIF', '/home/animation.gif')[0]
+        
+        if not gif_file:
+            return
+
+        self.ani.save(gif_file, writer="imagemagick")
+
+    def help(self):
+        """ブラウザでドキュメントを表示"""
+        url = QUrl("https://yn4k4nishi.github.io/aemwel_viewer/")
+        QDesktopServices.openUrl(url)
+
+
+def icon_path():
+    relative = 'docs/img/icon32x32.png'
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(os.path.abspath('.'), relative)
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setWindowIcon(QIcon(icon_path()))
     w = MainWindow()
     app.exec_()

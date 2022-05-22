@@ -1,9 +1,15 @@
+from plot import cartesian2D
+from plot import heatmap
+from plot import polar
+from plot import animation
+from plot import dispersion
+
 from enum import Enum
 
 import csv
 import numpy as np
-
 import skrf as rf
+import matplotlib
 
 
 class PlotForm(Enum):
@@ -12,10 +18,10 @@ class PlotForm(Enum):
     cartesian2D = 1
     """2次元の直交座標"""
 
-    polar       = 2
+    polar = 2
     """2次元の極座標"""
     
-    heatmap     = 3
+    heatmap = 3
     """ヒートマップ"""
         
 def load_data(file_name):
@@ -45,6 +51,7 @@ def load_data(file_name):
 
             header = reader.__next__()
             while '!' in header[0]: ## skip comment
+                print(header[0])
                 header = reader.__next__()
         
             values = [np.array([])] * len(header)
@@ -71,6 +78,6 @@ def load_data(file_name):
                 data[key] = net.s_db[:, i, j]
 
                 key = 'S{}{}_deg'.format(i+1, j+1)
-                data[key] = net.s_deg[:, i, j]
+                data[key] = net.s_deg_unwrap[:, i, j]
 
         return data
