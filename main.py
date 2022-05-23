@@ -135,6 +135,9 @@ class MainWindow(QMainWindow):
 
         self.ui.actionOpen_in_Browser.triggered.connect(self.help)
 
+        self.ui.checkBox_anchor.clicked.connect(lambda : self.ui.lineEdit_anchor_x.setDisabled(not self.ui.checkBox_anchor.isChecked()))
+        self.ui.checkBox_anchor.clicked.connect(lambda : self.ui.lineEdit_anchor_y.setDisabled(not self.ui.checkBox_anchor.isChecked()))
+
         ## show this widget
         self.show()
     
@@ -290,10 +293,14 @@ class MainWindow(QMainWindow):
             arg['offset'] = float(self.ui.lineEdit_phase_offset.text())
             
             if self.ui.checkBox_max.isChecked():
-                arg['vmax']   = float(self.ui.lineEdit_phase_max.text())
+                arg['vmax'] = float(self.ui.lineEdit_phase_max.text())
 
             if self.ui.checkBox_min.isChecked():
-                arg['vmin']   = float(self.ui.lineEdit_phase_min.text())
+                arg['vmin'] = float(self.ui.lineEdit_phase_min.text())
+            
+            if self.ui.checkBox_anchor.isChecked():
+                arg['anchor_x'] = float(self.ui.lineEdit_anchor_x.text())
+                arg['anchor_y'] = float(self.ui.lineEdit_anchor_y.text())
 
             if not self.ui.checkBox_ani.isChecked():
                 c = heatmap.plot(self.canvas.fig, self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)

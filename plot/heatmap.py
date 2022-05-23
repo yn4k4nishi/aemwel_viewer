@@ -21,7 +21,14 @@ def plot(fig, axes, data, pickup_axis, pickup_value, freq, **kwargs):
         使用する周波数を示すデータ系列名
     offset       : float
         位相勾配を見るときの位相のオフセット
-
+    vmax         : float
+        z成分の最大値
+    vmin         : float
+        z成分の最小値
+    anchor_x     : float
+        z成分の基準点のx座標
+    anchor_y     : float
+        z成分の基準点のy座標
     Returns
     -------
     :obj:`matplotlib.collections.QuadMesh`
@@ -62,6 +69,15 @@ def plot(fig, axes, data, pickup_axis, pickup_value, freq, **kwargs):
         k['vmax'] = kwargs['vmax']
     if 'vmin' in kwargs:
         k['vmin'] = kwargs['vmin']
+    
+    if 'anchor_x' in kwargs:
+        anchor_x = kwargs['anchor_x']
+        anchor_y = kwargs['anchor_y']
+
+        ax = np.where(x == anchor_x)[0][0]
+        ay = np.where(y == anchor_y)[0][0]
+
+        z -= z[ay, ax]
 
 
     im = axes.imshow(z, cmap='jet', **k)
