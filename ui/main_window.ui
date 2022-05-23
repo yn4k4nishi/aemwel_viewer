@@ -302,6 +302,16 @@
                    </property>
                   </widget>
                  </item>
+                 <item row="5" column="1">
+                  <widget class="QLabel" name="label_18">
+                   <property name="text">
+                    <string>y</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="0" column="1">
                   <widget class="QLabel" name="label_3">
                    <property name="text">
@@ -344,6 +354,19 @@
                    </property>
                   </widget>
                  </item>
+                 <item row="4" column="2">
+                  <widget class="QLineEdit" name="lineEdit_anchor_x">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
                  <item row="3" column="2">
                   <widget class="QLineEdit" name="lineEdit_phase_min">
                    <property name="enabled">
@@ -357,6 +380,19 @@
                    </property>
                    <property name="text">
                     <string>-180</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                 <item row="5" column="2">
+                  <widget class="QLineEdit" name="lineEdit_anchor_y">
+                   <property name="enabled">
+                    <bool>false</bool>
+                   </property>
+                   <property name="text">
+                    <string>0</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -399,39 +435,17 @@
                    </property>
                   </widget>
                  </item>
-                 <item row="5" column="1">
-                  <widget class="QLabel" name="label_18">
+                 <item row="6" column="0">
+                  <widget class="QCheckBox" name="checkBox_nomalize_phase">
                    <property name="text">
-                    <string>y</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    <string>nomalize as phase</string>
                    </property>
                   </widget>
                  </item>
-                 <item row="4" column="2">
-                  <widget class="QLineEdit" name="lineEdit_anchor_x">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
+                 <item row="6" column="1">
+                  <widget class="QLabel" name="label_19">
                    <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item row="5" column="2">
-                  <widget class="QLineEdit" name="lineEdit_anchor_y">
-                   <property name="enabled">
-                    <bool>false</bool>
-                   </property>
-                   <property name="text">
-                    <string>0</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                    <string>( -180 to 180 )</string>
                    </property>
                   </widget>
                  </item>

@@ -29,6 +29,8 @@ def plot(fig, axes, data, pickup_axis, pickup_value, freq, **kwargs):
         z成分の基準点のx座標
     anchor_y     : float
         z成分の基準点のy座標
+    nomalize_phase :
+        -180から180で規格化する
     Returns
     -------
     :obj:`matplotlib.collections.QuadMesh`
@@ -79,6 +81,9 @@ def plot(fig, axes, data, pickup_axis, pickup_value, freq, **kwargs):
 
         z -= z[ay, ax]
 
+    if 'nomalize_phase' in kwargs:
+        z = np.where(z >  180, z-360, z)
+        z = np.where(z < -180, z+360, z)
 
     im = axes.imshow(z, cmap='jet', **k)
 

@@ -302,6 +302,9 @@ class MainWindow(QMainWindow):
                 arg['anchor_x'] = float(self.ui.lineEdit_anchor_x.text())
                 arg['anchor_y'] = float(self.ui.lineEdit_anchor_y.text())
 
+            if self.ui.checkBox_nomalize_phase.isChecked():
+                arg['nomalize_phase'] = True
+
             if not self.ui.checkBox_ani.isChecked():
                 c = heatmap.plot(self.canvas.fig, self.canvas.axes, self.data, pickup_axis, pickup_value, freq, **arg)
             
