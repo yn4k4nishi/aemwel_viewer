@@ -28,6 +28,7 @@ class MainWindow(QMainWindow):
         self.ui.comboBox_XAxis.currentIndexChanged.connect(lambda : self.ui.lineEdit_XLable.setText(self.ui.comboBox_XAxis.currentText()))
         # y axis
         self.ui.listWidget_YAxes.itemClicked.connect(lambda : self.ui.groupBox_4.setEnabled(True))
+        self.ui.listWidget_YAxes.currentItemChanged.connect(self.selectYAxis)
         ##########################
 
         self.show()
@@ -68,10 +69,12 @@ class MainWindow(QMainWindow):
         url = QUrl("https://yn4k4nishi.github.io/aemwel_viewer/")
         QDesktopServices.openUrl(url)
 
-    def editYAxis(self):
-        i = self.ui.listWidget_YAxes.currentIndex().row()
+    def selectYAxis(self):
+        self.i_yaxis = self.ui.listWidget_YAxes.currentIndex().row()
 
-        print(i, self.y_props[i].label)
+        i = self.i_yaxis
+
+        # print(i, self.y_props[i].label)
 
         # set
         self.ui.checkBox_YEnable.setChecked(self.y_props[i].is_enabled)
