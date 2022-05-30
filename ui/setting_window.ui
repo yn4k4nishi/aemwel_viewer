@@ -205,7 +205,7 @@
                 </widget>
                </item>
                <item row="2" column="1">
-                <widget class="QLineEdit" name="lineEdit_9">
+                <widget class="QLineEdit" name="lineEdit_FontSize">
                  <property name="text">
                   <string>18</string>
                  </property>
@@ -229,7 +229,7 @@
                 </widget>
                </item>
                <item row="4" column="1">
-                <widget class="QLineEdit" name="lineEdit_10">
+                <widget class="QLineEdit" name="lineEdit_FigSizeX">
                  <property name="text">
                   <string>12</string>
                  </property>
@@ -246,14 +246,14 @@
                 </widget>
                </item>
                <item row="5" column="1">
-                <widget class="QLineEdit" name="lineEdit_11">
+                <widget class="QLineEdit" name="lineEdit_FigSizeY">
                  <property name="text">
                   <string>8</string>
                  </property>
                 </widget>
                </item>
                <item row="6" column="0">
-                <widget class="QCheckBox" name="checkBox_2">
+                <widget class="QCheckBox" name="checkBox_XLim">
                  <property name="text">
                   <string>x lim</string>
                  </property>
@@ -270,7 +270,7 @@
                 </widget>
                </item>
                <item row="7" column="1">
-                <widget class="QLineEdit" name="lineEdit_5">
+                <widget class="QLineEdit" name="lineEdit_XMax">
                  <property name="text">
                   <string>1</string>
                  </property>
@@ -287,14 +287,14 @@
                 </widget>
                </item>
                <item row="8" column="1">
-                <widget class="QLineEdit" name="lineEdit_6">
+                <widget class="QLineEdit" name="lineEdit_XMin">
                  <property name="text">
                   <string>10</string>
                  </property>
                 </widget>
                </item>
                <item row="9" column="0">
-                <widget class="QCheckBox" name="checkBox_3">
+                <widget class="QCheckBox" name="checkBox_YLim">
                  <property name="text">
                   <string>y lim</string>
                  </property>
@@ -311,7 +311,7 @@
                 </widget>
                </item>
                <item row="10" column="1">
-                <widget class="QLineEdit" name="lineEdit_7">
+                <widget class="QLineEdit" name="lineEdit_YMax">
                  <property name="text">
                   <string>0</string>
                  </property>
@@ -328,14 +328,14 @@
                 </widget>
                </item>
                <item row="11" column="1">
-                <widget class="QLineEdit" name="lineEdit_8">
+                <widget class="QLineEdit" name="lineEdit_YMin">
                  <property name="text">
                   <string>-30</string>
                  </property>
                 </widget>
                </item>
                <item row="12" column="0">
-                <widget class="QCheckBox" name="checkBox_4">
+                <widget class="QCheckBox" name="checkBox_Legend">
                  <property name="text">
                   <string>Legend</string>
                  </property>
@@ -345,7 +345,7 @@
                 </widget>
                </item>
                <item row="13" column="0">
-                <widget class="QCheckBox" name="checkBox_5">
+                <widget class="QCheckBox" name="checkBox_PolarChart">
                  <property name="text">
                   <string>Polar Chart</string>
                  </property>
@@ -358,7 +358,7 @@
              <widget class="QTextBrowser" name="textBrowser_FilePath"/>
             </item>
             <item>
-             <widget class="QComboBox" name="comboBox_3">
+             <widget class="QComboBox" name="comboBox_Plot">
               <item>
                <property name="text">
                 <string>&lt;New&gt;</string>
@@ -367,7 +367,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="pushButton">
+             <widget class="QPushButton" name="pushButton_Apply">
               <property name="text">
                <string>Apply</string>
               </property>

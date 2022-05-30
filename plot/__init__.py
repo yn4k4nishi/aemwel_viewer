@@ -4,6 +4,7 @@ from plot import heatmap
 from plot import polar
 from plot import animation
 from plot import dispersion
+from plot import plot2D
 
 from enum import Enum
 
@@ -13,24 +14,23 @@ import skrf as rf
 import matplotlib
 
 
-LineStyle = {
-    'solid'    : '-' ,
-    'dashed'   : '--',
-    'dash_dot' : '-.',
-    'dotted'   : ':' ,
-}
+LineStyle = (
+    'solid'  ,
+    'dashed' ,
+    'dashdot',
+    'dotted' ,
+)
 
-
-Color = {
-    'Blue'     : 'b',
-    'Green'    : 'g',
-    'Red'      : 'r',
-    'Cyan'     : 'c',
-    'Magenta'  : 'm',
-    'Yellow'   : 'y',
-    'Black'    : 'k',
-    'White'    : 'w',
-}
+Color = (
+    'Blue'   ,
+    'Green'  ,
+    'Red'    ,
+    'Cyan'   ,
+    'Magenta',
+    'Yellow' ,
+    'Black'  ,
+    # 'White'  ,
+)
 
 
 class PlotForm(Enum):

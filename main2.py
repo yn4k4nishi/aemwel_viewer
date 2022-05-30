@@ -1,5 +1,4 @@
 import sys
-from time import sleep
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -21,11 +20,11 @@ class MainWindow(QMainWindow):
         self.ui.setupUi(self)
 
         # setup combo box
-        for k in Color.keys():
-            self.ui.comboBox_Color.addItem(k)
+        for c in Color:
+            self.ui.comboBox_Color.addItem(c)
         
-        for k in LineStyle.keys():
-            self.ui.comboBox_LineStyle.addItem(k)
+        for s in LineStyle:
+            self.ui.comboBox_LineStyle.addItem(s)
 
         ###  connect function  ###
         # tab 
@@ -43,6 +42,8 @@ class MainWindow(QMainWindow):
         self.ui.lineEdit_LineWidth.editingFinished.connect(lambda : self.y_props[self.i_yaxis].setLineWidth(float(self.ui.lineEdit_LineWidth.text())))
         self.ui.comboBox_Color.currentIndexChanged.connect(lambda : self.y_props[self.i_yaxis].setColor(self.ui.comboBox_Color.currentText()))
         self.ui.comboBox_LineStyle.currentIndexChanged.connect(lambda : self.y_props[self.i_yaxis].setStyle(self.ui.comboBox_LineStyle.currentText()))
+        # apply
+        self.ui.pushButton_Apply.clicked.connect(self.apply)
         ##########################
 
         self.show()
@@ -88,7 +89,7 @@ class MainWindow(QMainWindow):
 
         i = self.i_yaxis
 
-        print(i, self.y_props[i].label, self.y_props[i].color, self.y_props[i].style)
+        # print(i, self.y_props[i].label, self.y_props[i].color, self.y_props[i].style)
 
         # set
         self.ui.checkBox_YEnable.setChecked(self.y_props[i].is_enabled)
@@ -100,9 +101,31 @@ class MainWindow(QMainWindow):
 
         i_style = self.ui.comboBox_LineStyle.findText(self.y_props[i].style)
         self.ui.comboBox_LineStyle.setCurrentIndex(i_style)
-        
-        print(i_color, i_style)
 
+
+    def apply(self):
+        # axis
+        xaxis  = self.ui.comboBox_XAxis.currentText() 
+        xlabel = self.ui.lineEdit_XLable.text()
+        # figure
+        title     = self.ui.lineEdit_Title.text()
+        font_size = self.ui.lineEdit_FontSize.text()
+        fig_size  = (float(self.ui.lineEdit_FigSizeX.text()), float(self.ui.lineEdit_FigSizeY.text()))
+        legend    = self.ui.checkBox_Legend.isChecked()
+
+        opt = {}
+        if self.ui.checkBox_XLim.isChecked():
+            opt['xmax'] = float(self.ui.lineEdit_XMax.text())
+            opt['xmin'] = float(self.ui.lineEdit_XMin.text())
+
+        if self.ui.checkBox_YLim.isChecked():
+            opt['ymax'] = float(self.ui.lineEdit_YMax.text())
+            opt['ymin'] = float(self.ui.lineEdit_YMin.text())
+        
+        if self.ui.checkBox_PolarChart.isChecked():
+            opt['projection'] = 'polar'
+
+        plot.plot2D.plot(self.data, xaxis, self.y_props, title, xlabel, font_size, fig_size, legend, **opt)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
