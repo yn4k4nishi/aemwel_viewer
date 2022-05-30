@@ -23,7 +23,13 @@ class PlotForm(Enum):
     
     heatmap = 3
     """ヒートマップ"""
-        
+
+class LineStyle(Enum):
+    solid    = '-'
+    dashed   = '--'
+    dash_dot = '-.'
+    dotted   = ':'
+
 def load_data(file_name):
     """データの読み込み
     
@@ -77,7 +83,7 @@ def load_data(file_name):
                 key = 'S{}{}_db'.format(i+1, j+1)
                 data[key] = net.s_db[:, i, j]
 
-                key = 'S{}{}_deg'.format(i+1, j+1)
+                key = 'S{}{}_theta'.format(i+1, j+1)
                 data[key] = net.s_deg_unwrap[:, i, j]
 
         return data

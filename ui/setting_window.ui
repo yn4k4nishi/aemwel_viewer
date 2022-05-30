@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>593</width>
-    <height>638</height>
+    <height>686</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,6 +52,23 @@
               <layout class="QVBoxLayout" name="verticalLayout_3">
                <item>
                 <widget class="QComboBox" name="comboBox_XAxis"/>
+               </item>
+               <item>
+                <layout class="QHBoxLayout" name="horizontalLayout_2">
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <item>
+                  <widget class="QLabel" name="label_14">
+                   <property name="text">
+                    <string>Label</string>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="lineEdit_XLable"/>
+                 </item>
+                </layout>
                </item>
               </layout>
              </widget>
@@ -121,32 +138,53 @@
                      </widget>
                     </item>
                     <item row="2" column="1">
-                     <widget class="QLineEdit" name="lineEdit"/>
+                     <widget class="QLineEdit" name="lineEdit_YLable"/>
                     </item>
                     <item row="3" column="1">
-                     <widget class="QLineEdit" name="lineEdit_2">
+                     <widget class="QLineEdit" name="lineEdit_LineWidth">
                       <property name="text">
                        <string>3</string>
                       </property>
                      </widget>
                     </item>
                     <item row="4" column="1">
-                     <widget class="QLineEdit" name="lineEdit_3">
+                     <widget class="QLineEdit" name="lineEdit_Color">
                       <property name="text">
                        <string>black</string>
                       </property>
                      </widget>
                     </item>
                     <item row="5" column="1">
-                     <widget class="QComboBox" name="comboBox_2"/>
+                     <widget class="QComboBox" name="comboBox_LineType">
+                      <item>
+                       <property name="text">
+                        <string>solid</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>dashed</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>dash_dot</string>
+                       </property>
+                      </item>
+                      <item>
+                       <property name="text">
+                        <string>dotted</string>
+                       </property>
+                      </item>
+                     </widget>
                     </item>
                     <item row="1" column="0">
-                     <widget class="QCheckBox" name="checkBox">
+                     <widget class="QCheckBox" name="checkBox_YEnable">
                       <property name="text">
                        <string>enable</string>
                       </property>
                       <property name="checked">
-                       <bool>true</bool>
+                       <bool>false</bool>
                       </property>
                       <property name="tristate">
                        <bool>false</bool>
@@ -184,17 +222,65 @@
                <item row="0" column="1">
                 <widget class="QLineEdit" name="lineEdit_Title"/>
                </item>
+               <item row="2" column="0">
+                <widget class="QLabel" name="label_10">
+                 <property name="text">
+                  <string>Font Size</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="2" column="1">
+                <widget class="QLineEdit" name="lineEdit_9">
+                 <property name="text">
+                  <string>18</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="3" column="0">
+                <widget class="QLabel" name="label_11">
+                 <property name="text">
+                  <string>Figure Size</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_12">
+                 <property name="text">
+                  <string>x</string>
+                 </property>
+                 <property name="indent">
+                  <number>12</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="1">
+                <widget class="QLineEdit" name="lineEdit_10">
+                 <property name="text">
+                  <string>12</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="0">
+                <widget class="QLabel" name="label_13">
+                 <property name="text">
+                  <string>y</string>
+                 </property>
+                 <property name="indent">
+                  <number>12</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="5" column="1">
+                <widget class="QLineEdit" name="lineEdit_11">
+                 <property name="text">
+                  <string>8</string>
+                 </property>
+                </widget>
+               </item>
                <item row="6" column="0">
                 <widget class="QCheckBox" name="checkBox_2">
                  <property name="text">
                   <string>x lim</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="9" column="0">
-                <widget class="QCheckBox" name="checkBox_3">
-                 <property name="text">
-                  <string>y lim</string>
                  </property>
                 </widget>
                </item>
@@ -208,6 +294,13 @@
                  </property>
                 </widget>
                </item>
+               <item row="7" column="1">
+                <widget class="QLineEdit" name="lineEdit_5">
+                 <property name="text">
+                  <string>1</string>
+                 </property>
+                </widget>
+               </item>
                <item row="8" column="0">
                 <widget class="QLabel" name="label_7">
                  <property name="text">
@@ -215,6 +308,20 @@
                  </property>
                  <property name="indent">
                   <number>8</number>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="1">
+                <widget class="QLineEdit" name="lineEdit_6">
+                 <property name="text">
+                  <string>10</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="0">
+                <widget class="QCheckBox" name="checkBox_3">
+                 <property name="text">
+                  <string>y lim</string>
                  </property>
                 </widget>
                </item>
@@ -228,6 +335,13 @@
                  </property>
                 </widget>
                </item>
+               <item row="10" column="1">
+                <widget class="QLineEdit" name="lineEdit_7">
+                 <property name="text">
+                  <string>0</string>
+                 </property>
+                </widget>
+               </item>
                <item row="11" column="0">
                 <widget class="QLabel" name="label_9">
                  <property name="text">
@@ -235,27 +349,6 @@
                  </property>
                  <property name="indent">
                   <number>8</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="7" column="1">
-                <widget class="QLineEdit" name="lineEdit_5">
-                 <property name="text">
-                  <string>1</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="8" column="1">
-                <widget class="QLineEdit" name="lineEdit_6">
-                 <property name="text">
-                  <string>10</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="10" column="1">
-                <widget class="QLineEdit" name="lineEdit_7">
-                 <property name="text">
-                  <string>0</string>
                  </property>
                 </widget>
                </item>
@@ -280,61 +373,6 @@
                 <widget class="QCheckBox" name="checkBox_5">
                  <property name="text">
                   <string>Polar Chart</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="0">
-                <widget class="QLabel" name="label_10">
-                 <property name="text">
-                  <string>Font Size</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="3" column="0">
-                <widget class="QLabel" name="label_11">
-                 <property name="text">
-                  <string>Figure Size</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="2" column="1">
-                <widget class="QLineEdit" name="lineEdit_9">
-                 <property name="text">
-                  <string>18</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="0">
-                <widget class="QLabel" name="label_12">
-                 <property name="text">
-                  <string>x</string>
-                 </property>
-                 <property name="indent">
-                  <number>12</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="0">
-                <widget class="QLabel" name="label_13">
-                 <property name="text">
-                  <string>y</string>
-                 </property>
-                 <property name="indent">
-                  <number>12</number>
-                 </property>
-                </widget>
-               </item>
-               <item row="4" column="1">
-                <widget class="QLineEdit" name="lineEdit_10">
-                 <property name="text">
-                  <string>12</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="5" column="1">
-                <widget class="QLineEdit" name="lineEdit_11">
-                 <property name="text">
-                  <string>8</string>
                  </property>
                 </widget>
                </item>
@@ -381,7 +419,7 @@
      <x>0</x>
      <y>0</y>
      <width>593</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

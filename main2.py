@@ -6,6 +6,8 @@ from PyQt5.QtWidgets import *
 
 from ui.setting_window import Ui_MainWindow
 
+from ui.y_axis import YAxisProperty
+
 import plot
 from plot import *
 
@@ -22,8 +24,10 @@ class MainWindow(QMainWindow):
         self.ui.actionOpen.triggered.connect(self.openFile)
         self.ui.actionClose.triggered.connect(self.close)
         self.ui.actionOpne_in_Browser.triggered.connect(self.help)
-        # 
-        self.ui.listWidget_YAxes.itemClicked.connect(self.editYAxis)
+        # x axis
+        self.ui.comboBox_XAxis.currentIndexChanged.connect(lambda : self.ui.lineEdit_XLable.setText(self.ui.comboBox_XAxis.currentText()))
+        # y axis
+        self.ui.listWidget_YAxes.itemClicked.connect(lambda : self.ui.groupBox_4.setEnabled(True))
         ##########################
 
         self.show()
@@ -46,6 +50,7 @@ class MainWindow(QMainWindow):
         # clear 
         self.ui.comboBox_XAxis.clear()
         self.ui.listWidget_YAxes.clear()
+        self.y_props = []
 
         # set Title
         self.ui.lineEdit_Title.setText(file_name.split('/')[-1].split('.')[0])
@@ -55,13 +60,24 @@ class MainWindow(QMainWindow):
             self.ui.comboBox_XAxis.addItem(k)   # X Axis
             self.ui.listWidget_YAxes.addItem(k) # Y Axis
 
+            self.y_props.append(YAxisProperty(k))
+
+
     def help(self):
         """ブラウザでドキュメントを表示"""
         url = QUrl("https://yn4k4nishi.github.io/aemwel_viewer/")
         QDesktopServices.openUrl(url)
 
     def editYAxis(self):
-        item = self.ui.listWidget_YAxes.currentItem()
+        i = self.ui.listWidget_YAxes.currentIndex().row()
+
+        print(i, self.y_props[i].label)
+
+        # set
+        self.ui.checkBox_YEnable.setChecked(self.y_props[i].is_enabled)
+        self.ui.lineEdit_YLable.setText(self.y_props[i].label)
+        self.ui.lineEdit_LineWidth.setText(str(self.y_props[i].lw))
+        self.ui.lineEdit_Color.setText(self.y_props[i].color)
 
 
 
