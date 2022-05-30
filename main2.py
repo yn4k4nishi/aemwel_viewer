@@ -1,4 +1,5 @@
 import sys
+from time import sleep
 
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -19,6 +20,13 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        # setup combo box
+        for k in Color.keys():
+            self.ui.comboBox_Color.addItem(k)
+        
+        for k in LineStyle.keys():
+            self.ui.comboBox_LineStyle.addItem(k)
+
         ###  connect function  ###
         # tab 
         self.ui.actionOpen.triggered.connect(self.openFile)
@@ -29,6 +37,12 @@ class MainWindow(QMainWindow):
         # y axis
         self.ui.listWidget_YAxes.itemClicked.connect(lambda : self.ui.groupBox_4.setEnabled(True))
         self.ui.listWidget_YAxes.currentItemChanged.connect(self.selectYAxis)
+        ## edit y axis param
+        self.ui.checkBox_YEnable.clicked.connect(lambda : self.y_props[self.i_yaxis].setEnable(self.ui.checkBox_YEnable.isChecked()))
+        self.ui.lineEdit_YLable.editingFinished.connect(lambda : self.y_props[self.i_yaxis].setLabel(self.ui.lineEdit_YLable.text()))
+        self.ui.lineEdit_LineWidth.editingFinished.connect(lambda : self.y_props[self.i_yaxis].setLineWidth(float(self.ui.lineEdit_LineWidth.text())))
+        self.ui.comboBox_Color.currentIndexChanged.connect(lambda : self.y_props[self.i_yaxis].setColor(self.ui.comboBox_Color.currentText()))
+        self.ui.comboBox_LineStyle.currentIndexChanged.connect(lambda : self.y_props[self.i_yaxis].setStyle(self.ui.comboBox_LineStyle.currentText()))
         ##########################
 
         self.show()
@@ -74,14 +88,20 @@ class MainWindow(QMainWindow):
 
         i = self.i_yaxis
 
-        # print(i, self.y_props[i].label)
+        print(i, self.y_props[i].label, self.y_props[i].color, self.y_props[i].style)
 
         # set
         self.ui.checkBox_YEnable.setChecked(self.y_props[i].is_enabled)
         self.ui.lineEdit_YLable.setText(self.y_props[i].label)
         self.ui.lineEdit_LineWidth.setText(str(self.y_props[i].lw))
-        self.ui.lineEdit_Color.setText(self.y_props[i].color)
+        
+        i_color = self.ui.comboBox_Color.findText(self.y_props[i].color)
+        self.ui.comboBox_Color.setCurrentIndex(i_color)
 
+        i_style = self.ui.comboBox_LineStyle.findText(self.y_props[i].style)
+        self.ui.comboBox_LineStyle.setCurrentIndex(i_style)
+        
+        print(i_color, i_style)
 
 
 if __name__ == "__main__":

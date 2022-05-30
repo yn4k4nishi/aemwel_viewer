@@ -1,12 +1,13 @@
+from plot import Color
+from plot import LineStyle
 
 class YAxisProperty():
 
     is_enabled = True
     label  = ''
     lw     = 3
-    color  = 'black'
-    type   = 'Solid'
-
+    color  = 'Black'
+    style  = 'solid'
 
     def __init__(self, label, is_enabled=True) -> None:
         self.label = label
@@ -24,5 +25,5 @@ class YAxisProperty():
     def setColor(self, color):
         self.color = color
 
-    def setType(self, type):
-        self.type = type
+    def setStyle(self, style):
+        self.style = style

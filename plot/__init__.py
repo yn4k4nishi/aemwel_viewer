@@ -1,3 +1,4 @@
+from matplotlib.pyplot import cla
 from plot import cartesian2D
 from plot import heatmap
 from plot import polar
@@ -12,6 +13,26 @@ import skrf as rf
 import matplotlib
 
 
+LineStyle = {
+    'solid'    : '-' ,
+    'dashed'   : '--',
+    'dash_dot' : '-.',
+    'dotted'   : ':' ,
+}
+
+
+Color = {
+    'Blue'     : 'b',
+    'Green'    : 'g',
+    'Red'      : 'r',
+    'Cyan'     : 'c',
+    'Magenta'  : 'm',
+    'Yellow'   : 'y',
+    'Black'    : 'k',
+    'White'    : 'w',
+}
+
+
 class PlotForm(Enum):
     """プロットの形式"""
 
@@ -24,11 +45,6 @@ class PlotForm(Enum):
     heatmap = 3
     """ヒートマップ"""
 
-class LineStyle(Enum):
-    solid    = '-'
-    dashed   = '--'
-    dash_dot = '-.'
-    dotted   = ':'
 
 def load_data(file_name):
     """データの読み込み
