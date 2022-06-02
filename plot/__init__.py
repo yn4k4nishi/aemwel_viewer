@@ -98,7 +98,9 @@ def load_data(file_name):
             for j in range(net.s.shape[2]):
                 key = 'S{}{}_db'.format(i+1, j+1)
                 data[key] = net.s_db[:, i, j]
-
+        
+        for i in range(net.s.shape[1]):
+            for j in range(net.s.shape[2]):
                 key = 'S{}{}_theta'.format(i+1, j+1)
                 data[key] = net.s_deg_unwrap[:, i, j]
 
