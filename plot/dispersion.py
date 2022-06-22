@@ -1,8 +1,5 @@
 
-from cProfile import label
 from operator import le
-from telnetlib import TM
-from turtle import color
 
 
 def plot(axes, data, data_port, ncell, lcell, m1, m2, **kwargs):
@@ -24,7 +21,7 @@ def plot(axes, data, data_port, ncell, lcell, m1, m2, **kwargs):
         角度の不定性(2 pi m)を補正するための変数
     """
 
-    axes.set_xlabel(r'$\Delta \beta / \pi$')
+    axes.set_xlabel(r'$\Delta \beta p / \pi$')
     axes.set_ylabel('Frequency [GHz]')
     axes.set_xlim([-0.5, 0.5])
 
@@ -35,8 +32,8 @@ def plot(axes, data, data_port, ncell, lcell, m1, m2, **kwargs):
 
     freq = data['freq_GHz']
 
-    beta_p = -(data['S21_deg'] - data_port['S21_deg']) / 180 / ncell - m1 / ncell
-    beta_m =  (data['S12_deg'] - data_port['S12_deg']) / 180 / ncell + m2 / ncell
+    beta_p =  (data['S21_deg'] - data_port['S21_deg']) / 180 / ncell - m1 / ncell
+    beta_m = -(data['S12_deg'] - data_port['S12_deg']) / 180 / ncell + m2 / ncell
 
     beta_d = (beta_p + beta_m)/2
 
@@ -44,19 +41,42 @@ def plot(axes, data, data_port, ncell, lcell, m1, m2, **kwargs):
     data_m = [[]]
 
     ## Wrap phase
-    tp = 0
-    tm = 0
     for i in range(len(beta_p)):
-        data_p[tp].append(beta_p[i] - tp)
-        data_m[tm].append(beta_m[i] + tm)
+        while beta_p[i] < 0.5:
+            beta_p[i] += 1
+        
+        while beta_p[i] > 0.5:
+            beta_p[i] -= 1
 
-        if abs(beta_p[i] - tp) > 0.5:
+        while beta_m[i] < 0.5:
+            beta_m[i] += 1
+    
+        while beta_m[i] > 0.5:
+            beta_m[i] -= 1
+    
+    for i in range(len(beta_p)-1):
+        data_p[-1].append(beta_p[i])
+        data_m[-1].append(beta_m[i])
+
+        if abs(beta_p[i+1] - beta_p[i]) > 0.5:
             data_p.append([])
-            tp += 1
-
-        if abs(beta_m[i] + tm) > 0.5:
+        
+        if abs(beta_m[i+1] - beta_m[i]) > 0.5:
             data_m.append([])
-            tm += 1
+        
+
+    # for i in range(len(beta_p)):
+
+    #     if abs(beta_p[i] + tp) > 0.5:
+    #         data_p.append([])
+    #         tp += 1
+
+    #     if abs(beta_m[i] + tm) > 0.5:
+    #         data_m.append([])
+    #         tm -= 1
+
+    #     data_p[-1].append(beta_p[i] + tp)
+    #     data_m[-1].append(beta_m[i] + tm)
 
     ip = 0
     im = 0
@@ -64,11 +84,12 @@ def plot(axes, data, data_port, ncell, lcell, m1, m2, **kwargs):
     axes.plot(data_p[0][0], freq[0], label=r'$\beta_p$', color='blue', lw=3)
     axes.plot(data_m[0][0], freq[0], label=r'$\beta_m$', color='red' , lw=3)
 
-    for bp, bm in zip(data_p, data_m):
+    for bp in data_p:
         axes.plot(bp, freq[ip:ip+len(bp)], color='blue', lw=3)
-        axes.plot(bm, freq[im:im+len(bm)], color='red' , lw=3)
-
         ip += len(bp)
+    
+    for bm in data_m:
+        axes.plot(bm, freq[im:im+len(bm)], color='red' , lw=3)
         im += len(bm)
 
     axes.plot(beta_d, freq, label=r'$\Delta\beta$', color='black', lw=3)
