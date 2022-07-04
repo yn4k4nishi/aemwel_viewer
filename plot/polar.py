@@ -23,9 +23,14 @@ def plot(axes, data, x_axis, y_axes, **kwargs):
     angle = data[x_axis] / 180 * np.pi
     
     for y_axis in y_axes:
-        mag   = data[y_axis]
+        mag   = data[y_axis] 
 
-        axes.plot(angle, mag, label=y_axis)
+        if 'max_line' in kwargs:
+            _i = np.argmax(mag)
+            axes.axvline(angle[_i], linestyle="--")
+            axes.text(angle[_i], mag[_i] + 5, "{:.2f} deg".format(angle[_i]*180/np.pi))
+
+        axes.plot(angle, mag, label=y_axis, lw=3)
 
     axes.axes.set_theta_zero_location('N')
     axes.set_theta_direction(-1)

@@ -274,6 +274,9 @@ class MainWindow(QMainWindow):
             if self.ui.checkBox_lim.isChecked():
                 arg['ymax'] = float(self.ui.lineEdit_ymax_2.text())
                 arg['ymin'] = float(self.ui.lineEdit_ymin_2.text())
+            
+            if self.ui.checkBox_max_line.isChecked():
+                arg['max_line'] = True
 
             polar.plot(self.canvas.axes, self.data, x_axis, y_axes, **arg)
             self.canvas.fig.legend(bbox_to_anchor=(1, 0), loc='lower right')
